@@ -42,8 +42,10 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           {label}
         </Text>
         <ChakraInput
+          h="60px"
           aria-label={name}
           name={name}
+          fontSize="xl"
           ref={ref}
           borderColor="transparent"
           bgColor={isDark ? 'main.darkBlue' : 'main.offWhite'}
