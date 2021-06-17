@@ -9,6 +9,7 @@ import {
   Input as ChakraInput,
   InputProps as ChakraInputProps,
   Tooltip,
+  InputRightElement,
 } from '@chakra-ui/react';
 import { FiAlertCircle } from 'react-icons/fi';
 
@@ -27,20 +28,27 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
     <FormControl
       display="flex"
       flexDirection="column"
-      alignItems="center"
+      alignItems="flex-start"
+      justifyContent="center"
       isInvalid={!!error}
       maxW="450px"
+      mb="6"
     >
-      <InputGroup flexDir="column">
-        <Text
-          ml="4"
-          fontWeight="600"
-          fontSize="lg"
-          letterSpacing="1px"
-          color="main.white"
-        >
-          {label}
-        </Text>
+      <Text
+        ml="4"
+        fontWeight="600"
+        fontSize="m"
+        letterSpacing="1px"
+        color="main.white"
+      >
+        {label}
+      </Text>
+      <InputGroup
+        display="flex"
+        flexDir="row"
+        alignItems="center"
+        justifyContent="center"
+      >
         <ChakraInput
           h="60px"
           aria-label={name}
@@ -60,15 +68,17 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           pr={8}
           {...rest}
         />
-      </InputGroup>
 
-      {!!error && (
-        <Tooltip label={error.message} bg="red.500">
-          <FormErrorMessage ml={-6} mt={0} zIndex="tooltip">
-            <Icon as={FiAlertCircle} color="red.500" w={4} h={4} />
-          </FormErrorMessage>
-        </Tooltip>
-      )}
+        {!!error && (
+          <InputRightElement width="4.5rem" h="100%">
+            <Tooltip label={error.message} bg="red.500">
+              <FormErrorMessage>
+                <Icon as={FiAlertCircle} color="red.500" w={5} h={5} />
+              </FormErrorMessage>
+            </Tooltip>
+          </InputRightElement>
+        )}
+      </InputGroup>
     </FormControl>
   );
 };
