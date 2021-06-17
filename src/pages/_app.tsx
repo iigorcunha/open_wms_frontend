@@ -9,10 +9,10 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <ChakraProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
-       <SidebarDrawerProvider>
-        <Component {...pageProps} />
-       </SidebarDrawerProvider>
-     </QueryClientProvider>
+        <SidebarDrawerProvider>
+          <Component {...pageProps} />
+        </SidebarDrawerProvider>
+      </QueryClientProvider>
     </ChakraProvider>
   );
 }

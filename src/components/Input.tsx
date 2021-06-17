@@ -32,14 +32,13 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
       justifyContent="center"
       isInvalid={!!error}
       maxW="450px"
-      mb="6"
     >
       <Text
         ml="4"
         fontWeight="600"
         fontSize="m"
         letterSpacing="1px"
-        color="main.white"
+        color={isDark ? 'main.white' : 'main.darkBlue'}
       >
         {label}
       </Text>
@@ -55,13 +54,15 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           name={name}
           fontSize="xl"
           ref={ref}
+          color="main.darkBlue"
+          borderWidth="3px"
           borderColor="transparent"
-          bgColor={isDark ? 'main.darkBlue' : 'main.offWhite'}
+          bgColor="main.offWhite"
           _placeholder={{
-            color: isDark ? 'main.white' : 'main.darkBlue',
+            color: 'main.darkBlue',
           }}
           _hover={{
-            borderColor: isDark ? 'main.offWhite' : 'main.green',
+            borderColor: isDark ? 'main.green' : 'main.darkBlue',
           }}
           borderRadius="20px"
           py={6}

@@ -1,4 +1,4 @@
-import { Grid, Box, Flex, Image, useToast } from '@chakra-ui/react';
+import { Grid, Box, Flex, Image, useToast, VStack } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
@@ -112,44 +112,52 @@ export default function SignUp(): JSX.Element {
         onSubmit={handleSubmit(onSubmit, onError)}
       >
         <Image src="/images/wmsLogo.svg" mb="8" />
-        <Input
-          name="name"
-          label="Nome Completo"
-          error={errors.name}
-          {...register('name')}
-        />
-        <Input
-          name="login"
-          label="Usuário"
-          error={errors.login}
-          {...register('login')}
-        />
-        <Input
-          name="email"
-          label="Email"
-          error={errors.email}
-          {...register('email')}
-        />
-        <Input
-          name="phone"
-          label="Número de telefone"
-          error={errors.phone}
-          {...register('phone')}
-        />
-        <Input
-          name="password"
-          label="Senha"
-          type="password"
-          error={errors.password}
-          {...register('password')}
-        />
-        <Input
-          name="passwordConfirmation"
-          label="Confirmação de Senha"
-          type="password"
-          error={errors.passwordConfirmation}
-          {...register('passwordConfirmation')}
-        />
+        <VStack w="100%">
+          <Input
+            isDark
+            name="name"
+            label="Nome Completo"
+            error={errors.name}
+            {...register('name')}
+          />
+          <Input
+            isDark
+            name="login"
+            label="Usuário"
+            error={errors.login}
+            {...register('login')}
+          />
+          <Input
+            isDark
+            name="email"
+            label="Email"
+            error={errors.email}
+            {...register('email')}
+          />
+          <Input
+            isDark
+            name="phone"
+            label="Número de telefone"
+            error={errors.phone}
+            {...register('phone')}
+          />
+          <Input
+            isDark
+            name="password"
+            label="Senha"
+            type="password"
+            error={errors.password}
+            {...register('password')}
+          />
+          <Input
+            isDark
+            name="passwordConfirmation"
+            label="Confirmação de Senha"
+            type="password"
+            error={errors.passwordConfirmation}
+            {...register('passwordConfirmation')}
+          />
+        </VStack>
         <Button type="submit" mt="8">
           CADASTRAR
         </Button>
