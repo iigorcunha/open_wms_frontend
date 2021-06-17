@@ -19,7 +19,7 @@ export default function Login(): JSX.Element {
         justifyContent="center"
       >
         <Image src="/images/wmsLogo.svg" mb="16" />
-        <Input name="email" label="Email" mb="6" />
+        <Input name="email" label="Email" />
         <Input name="password" label="Senha" type="password" />
         <Button mt="8">ENTRAR</Button>
       </Flex>
