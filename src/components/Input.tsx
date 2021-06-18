@@ -10,7 +10,6 @@ import {
   InputProps as ChakraInputProps,
   Tooltip,
   InputRightElement,
-  InputLeftElement,
 } from '@chakra-ui/react';
 import { FiAlertCircle } from 'react-icons/fi';
 
@@ -19,11 +18,10 @@ interface InputProps extends ChakraInputProps {
   label?: string;
   error?: FieldError;
   isDark?: boolean;
-  leftInputElement?: string;
 }
 
 const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
-  { name, isDark = false, label, error = null, leftInputElement, ...rest },
+  { name, isDark = false, label, error = null, ...rest },
   ref
 ) => {
   return (
@@ -34,13 +32,14 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
       justifyContent="center"
       isInvalid={!!error}
       maxW="450px"
+      mb="6"
     >
       <Text
         ml="4"
         fontWeight="600"
         fontSize="m"
         letterSpacing="1px"
-        color={isDark ? 'main.white' : 'main.darkBlue'}
+        color="main.white"
       >
         {label}
       </Text>
@@ -50,29 +49,19 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
         alignItems="center"
         justifyContent="center"
       >
-        {leftInputElement && (
-          <InputLeftElement p={6} fontSize="xl" h="100%" color="main.darkBlue">
-            <span role="img" aria-label="Brazil">
-              {leftInputElement}
-            </span>
-          </InputLeftElement>
-        )}
-
         <ChakraInput
-          size="lg"
+          h="60px"
           aria-label={name}
           name={name}
           fontSize="xl"
           ref={ref}
-          color="main.darkBlue"
-          borderWidth="3px"
           borderColor="transparent"
           bgColor="main.offWhite"
           _hover={{
-            borderColor: isDark ? 'main.green' : 'main.darkBlue',
+            borderColor: isDark ? 'main.offWhite' : 'main.green',
           }}
           borderRadius="20px"
-          py={8}
+          py={6}
           pr={8}
           {...rest}
         />

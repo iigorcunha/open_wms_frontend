@@ -1,4 +1,4 @@
-import { Grid, Box, Flex, Image, useToast, VStack } from '@chakra-ui/react';
+import { Grid, Box, Flex, Image, useToast } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Input } from '../components/Input';
 import { Button } from '../components/Button';
-import { api } from '../services/apiClient';
+import { api } from '../services/api';
 import { queryClient } from '../services/queryClient';
 
 interface ICreateUserFormData {
@@ -77,10 +77,7 @@ export default function SignUp(): JSX.Element {
 
   const onSubmit = async (user: ICreateUserFormData): Promise<void> => {
     try {
-      await createUser.mutateAsync({
-        ...user,
-        phone: `+55${user.phone}`,
-      });
+      await createUser.mutateAsync(user);
 
       toast({
         duration: 3000,
