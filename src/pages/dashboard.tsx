@@ -21,4 +21,4 @@ export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
   return {
     props: {},
   };
-});
+};
