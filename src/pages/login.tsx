@@ -1,8 +1,48 @@
-import { Grid, Image, Flex, Box } from '@chakra-ui/react';
+import { Grid, Image, Flex, Box, VStack, useToast } from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
+import { useMutation } from 'react-query';
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
+import { useAuth } from '../hooks/useAuth';
+
+interface SignInFormData {
+  login: string;
+  password: string;
+}
 
 export default function Login(): JSX.Element {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const toast = useToast();
+
+  const { signIn } = useAuth();
+
+  const authenticate = useMutation(
+    async ({ login, password }: SignInFormData): Promise<void> => {
+      await signIn({ login, password });
+    }
+  );
+
+  const onSubmit = async ({
+    login,
+    password,
+  }: SignInFormData): Promise<void> => {
+    try {
+      await authenticate.mutateAsync({ login, password });
+    } catch (err) {
+      toast({
+        duration: 3000,
+        status: 'error',
+        title: 'Algo deu errado',
+        description: 'Usuário/senha incorretos!',
+        position: 'top-right',
+      });
+    }
+  };
   return (
     <Grid templateAreas="'1fr 1fr'" h="100vh">
       <Box

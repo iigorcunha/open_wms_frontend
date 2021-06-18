@@ -5,11 +5,17 @@ import { withSSRAuth } from '../utils/withSSRAuth';
 
 export default function Warehouse(): JSX.Element {
   return (
-    <HStack spacing="-10">
+    <Flex>
       <Sidebar />
-      <Flex bg="main.white" w="100vw" h="100vh" borderRadius="20">
-        <Flex>
-          <Img src="/images/closedbox.svg" w="32" h="32" ml="10" mt="10" />
+      <Flex
+        bg="main.white"
+        borderRadius="20"
+        ml="-10"
+        p="8"
+        alignItems="flex-start"
+      >
+        <HStack>
+          <Img src="/images/closedbox.svg" />
           <Text
             ml="8"
             fontSize="50"
@@ -19,9 +25,9 @@ export default function Warehouse(): JSX.Element {
           >
             Estoque
           </Text>
-        </Flex>
+        </HStack>
       </Flex>
-    </HStack>
+    </Flex>
   );
 }
 

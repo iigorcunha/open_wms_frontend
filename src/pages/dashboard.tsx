@@ -8,7 +8,7 @@ export default function Dashboard(): JSX.Element {
   return (
     <Flex>
       <Sidebar />
-      <Flex>
+      <Flex bg="main.white" borderRadius="20" ml="-10" p="8">
         <Heading color="main.darkBlue" my={8}>
           Dashboard
         </Heading>

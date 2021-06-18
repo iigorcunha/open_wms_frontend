@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
-import { setCookie, parseCookies, destroyCookie } from 'nookies';
+import { setCookie, destroyCookie } from 'nookies';
 import Router from 'next/router';
 // eslint-disable-next-line import/no-cycle
 import { api } from '../services/apiClient';
@@ -17,7 +17,7 @@ type SignInCredentials = {
   password: string;
 };
 
-type AuthContextData = {
+export type AuthContextData = {
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut: () => void;
   user: User;
@@ -28,11 +28,11 @@ type AuthProviderProps = {
   children: ReactNode;
 };
 
-export const AuthContext = createContext({} as AuthContextData);
+const AuthContext = createContext({} as AuthContextData);
 
 let authChannel: BroadcastChannel;
 
-export function signOut(): void {
+function signOut(): void {
   destroyCookie(undefined, '@openwms.token');
 
   authChannel.postMessage('signOut');
@@ -40,7 +40,7 @@ export function signOut(): void {
   Router.push('/');
 }
 
-export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
+function AuthProvider({ children }: AuthProviderProps): JSX.Element {
   const [user, setUser] = useState<User>(null);
   const isAuthenticated = !!user;
 
@@ -61,31 +61,12 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const { '@openwms.token': token } = parseCookies();
-
-  //   if (token) {
-  //     api
-  //       .get('/me')
-  //       .then(response => {
-  //         const { email, permissions, roles } = response.data;
-
-  //         setUser({ email, permissions, roles });
-  //       })
-  //       .catch(() => {
-  //         signOut();
-  //       });
-  //   }
-  // }, []);
-
   async function signIn({ login, password }: SignInCredentials): Promise<void> {
     try {
       const response = await api.post('sessions', {
         login,
         password,
       });
-
-      console.log(response);
 
       const { token, user: userData } = response.data;
 
@@ -111,3 +92,5 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
     </AuthContext.Provider>
   );
 }
+
+export { AuthContext, signOut, AuthProvider };
