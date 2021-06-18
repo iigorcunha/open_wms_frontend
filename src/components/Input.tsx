@@ -10,6 +10,7 @@ import {
   InputProps as ChakraInputProps,
   Tooltip,
   InputRightElement,
+  InputLeftElement,
 } from '@chakra-ui/react';
 import { FiAlertCircle } from 'react-icons/fi';
 
@@ -18,10 +19,11 @@ interface InputProps extends ChakraInputProps {
   label?: string;
   error?: FieldError;
   isDark?: boolean;
+  leftInputElement?: string;
 }
 
 const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
-  { name, isDark = false, label, error = null, ...rest },
+  { name, isDark = false, label, error = null, leftInputElement, ...rest },
   ref
 ) => {
   return (
@@ -48,8 +50,16 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
         alignItems="center"
         justifyContent="center"
       >
+        {leftInputElement && (
+          <InputLeftElement p={6} fontSize="xl" h="100%" color="main.darkBlue">
+            <span role="img" aria-label="Brazil">
+              {leftInputElement}
+            </span>
+          </InputLeftElement>
+        )}
+
         <ChakraInput
-          h="60px"
+          size="lg"
           aria-label={name}
           name={name}
           fontSize="xl"
@@ -65,7 +75,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
             borderColor: isDark ? 'main.green' : 'main.darkBlue',
           }}
           borderRadius="20px"
-          py={6}
+          py={8}
           pr={8}
           {...rest}
         />

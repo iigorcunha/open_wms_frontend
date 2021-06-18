@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
-import { api } from '../services/api';
+import { api } from '../services/apiClient';
 import { queryClient } from '../services/queryClient';
 
 import { Button } from './Button';

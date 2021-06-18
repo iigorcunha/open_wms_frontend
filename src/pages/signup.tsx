@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Input } from '../components/Input';
 import { Button } from '../components/Button';
-import { api } from '../services/api';
+import { api } from '../services/apiClient';
 import { queryClient } from '../services/queryClient';
 
 interface ICreateUserFormData {
@@ -77,7 +77,10 @@ export default function SignUp(): JSX.Element {
 
   const onSubmit = async (user: ICreateUserFormData): Promise<void> => {
     try {
-      await createUser.mutateAsync(user);
+      await createUser.mutateAsync({
+        ...user,
+        phone: `+55${user.phone}`,
+      });
 
       toast({
         duration: 3000,
@@ -137,6 +140,7 @@ export default function SignUp(): JSX.Element {
           <Input
             isDark
             name="phone"
+            leftInputElement="🇧🇷"
             label="Número de telefone"
             error={errors.phone}
             {...register('phone')}

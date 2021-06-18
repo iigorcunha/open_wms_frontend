@@ -16,6 +16,7 @@ import {
 import { ModalRegisterItem } from '../components/ModalRegisterItem';
 import { Button } from '../components/Button';
 import { Sidebar } from '../components/Sidebar';
+import { withSSRAuth } from '../utils/withSSRAuth';
 
 export default function Products(): JSX.Element {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -236,3 +237,9 @@ export default function Products(): JSX.Element {
     </Flex>
   );
 }
+
+export const getServerSideProps = withSSRAuth(async ctx => {
+  return {
+    props: {},
+  };
+});
