@@ -1,4 +1,5 @@
 import { Flex, Heading } from '@chakra-ui/react';
+import { GetServerSideProps } from 'next';
 
 import { Sidebar } from '../components/Sidebar';
 import { withSSRAuth } from '../utils/withSSRAuth';
@@ -16,7 +17,7 @@ export default function Dashboard(): JSX.Element {
   );
 }
 
-export const getServerSideProps = withSSRAuth(async ctx => {
+export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
   return {
     props: {},
   };
