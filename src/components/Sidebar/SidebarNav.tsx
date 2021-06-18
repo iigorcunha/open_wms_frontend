@@ -11,7 +11,7 @@ import { SidebarProfile } from './SidebarProfile';
 export function SidebarNav(): JSX.Element {
   return (
     <Stack ml="6" mt="10" spacing="8" align="flex-start">
-      <SidebarProfile name="Fulano de Tal" />
+      <SidebarProfile />
 
       <SidebarLink href="/dashboard" icon={RiDashboardFill}>
         Dashboard

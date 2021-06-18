@@ -79,7 +79,7 @@ function AuthProvider({ children }: AuthProviderProps): JSX.Element {
         path: '/',
       });
 
-      setUser(userData);
+      setUser(userData as User);
 
       api.defaults.headers.Authorization = `Bearer ${token}`;
 

@@ -6,8 +6,8 @@ interface SidebarProfileProps {
   name: string;
 }
 
-export function SidebarProfile({ name }: SidebarProfileProps): JSX.Element {
-  const { signOut } = useAuth();
+export function SidebarProfile(): JSX.Element {
+  const { signOut, user } = useAuth();
   return (
     <Flex
       flexDirection="column"
@@ -25,7 +25,7 @@ export function SidebarProfile({ name }: SidebarProfileProps): JSX.Element {
         bgColor="#F5F5F5"
       />
       <Text mr="10" fontWeight="bold">
-        {name}
+        {user.login}
       </Text>
 
       <IconButton
