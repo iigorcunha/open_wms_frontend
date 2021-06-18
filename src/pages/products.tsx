@@ -13,6 +13,7 @@ import {
   Image,
   Box,
 } from '@chakra-ui/react';
+import { GetServerSideProps } from 'next';
 import { ModalRegisterItem } from '../components/ModalRegisterItem';
 import { Button } from '../components/Button';
 import { Sidebar } from '../components/Sidebar';
@@ -238,7 +239,7 @@ export default function Products(): JSX.Element {
   );
 }
 
-export const getServerSideProps = withSSRAuth(async ctx => {
+export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
   return {
     props: {},
   };

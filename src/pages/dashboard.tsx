@@ -1,30 +1,23 @@
-import { Flex, Text, HStack, Img } from '@chakra-ui/react';
+import { Flex, Heading } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
-import { Sidebar } from '../components/Sidebar';
 
-export default function Stock(props): JSX.Element {
+import { Sidebar } from '../components/Sidebar';
+import { withSSRAuth } from '../utils/withSSRAuth';
+
+export default function Dashboard(): JSX.Element {
   return (
-    <HStack spacing="-10">
+    <Flex>
       <Sidebar />
-      <Flex bg="main.white" w="100vw" h="100vh" borderRadius="20">
-        <Flex>
-          <Img src="/images/closedbox.svg" w="32" h="32" ml="10" mt="10" />
-          <Text
-            ml="8"
-            fontSize="50"
-            mt="14"
-            fontWeight="900"
-            color="main.darkBlue"
-          >
-            Dashboard
-          </Text>
-        </Flex>
+      <Flex>
+        <Heading color="main.darkBlue" my={8}>
+          Dashboard
+        </Heading>
       </Flex>
-    </HStack>
+    </Flex>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
   return {
     props: {},
   };

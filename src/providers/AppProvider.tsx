@@ -1,5 +1,5 @@
-import { AuthProvider } from '../../contexts/AuthContext';
-import { SidebarDrawerProvider } from '../../contexts/SidebarDrawerContext';
+import { AuthProvider } from '../contexts/AuthContext';
+import { SidebarDrawerProvider } from '../contexts/SidebarDrawerContext';
 
 interface AppProviderProps {
   children: React.ReactElement;

@@ -3,7 +3,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClientProvider } from 'react-query';
 import { theme } from '../styles/theme';
 import { queryClient } from '../services/queryClient';
-import { SidebarDrawerProvider } from '../contexts/SidebarDrawerContext';
+import { AppProvider } from '../providers/AppProvider';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
