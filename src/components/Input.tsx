@@ -68,9 +68,6 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           borderWidth="3px"
           borderColor="transparent"
           bgColor="main.offWhite"
-          _active={{
-            backgroundColor: '#ff3535',
-          }}
           _hover={{
             borderColor: isDark ? 'main.green' : 'main.darkBlue',
           }}
