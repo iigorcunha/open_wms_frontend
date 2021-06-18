@@ -1,9 +1,9 @@
 import { Stack } from '@chakra-ui/react';
 import {
-  RiDashboardLine,
-  RiTBoxLine,
-  RiFileEditLine,
-  RiSettingsLine,
+  RiDashboardFill,
+  RiArchiveFill,
+  RiDraftFill,
+  RiSettings5Fill,
 } from 'react-icons/ri';
 import { SidebarLink } from './SidebarLink';
 import { SidebarProfile } from './SidebarProfile';

@@ -2,6 +2,8 @@ import { createContext, ReactNode, useEffect, useState } from 'react';
 import { setCookie, destroyCookie } from 'nookies';
 import Router from 'next/router';
 // eslint-disable-next-line import/no-cycle
+import { useToast } from '@chakra-ui/react';
+// eslint-disable-next-line import/no-cycle
 import { api } from '../services/apiClient';
 
 type User = {
@@ -44,6 +46,8 @@ function AuthProvider({ children }: AuthProviderProps): JSX.Element {
   const [user, setUser] = useState<User>(null);
   const isAuthenticated = !!user;
 
+  const toast = useToast();
+
   useEffect(() => {
     authChannel = new BroadcastChannel('auth');
 
@@ -82,7 +86,11 @@ function AuthProvider({ children }: AuthProviderProps): JSX.Element {
       Router.push('/dashboard');
       authChannel.postMessage('signIn');
     } catch (err) {
-      console.log(err);
+      toast({
+        status: 'error',
+        title: err.response.data.error,
+        position: 'top-right',
+      });
     }
   }
 

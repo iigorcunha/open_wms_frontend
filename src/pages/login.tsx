@@ -57,6 +57,8 @@ export default function Login(): JSX.Element {
         flexDir="column"
         alignItems="center"
         justifyContent="center"
+        as="form"
+        onSubmit={handleSubmit(onSubmit)}
       >
         <Image src="/images/logoVertical.svg" mb="16" />
         <VStack w="100%" spacing="8">

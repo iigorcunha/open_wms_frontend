@@ -1,4 +1,4 @@
-import { Grid, Box, Flex, Image, useToast } from '@chakra-ui/react';
+import { Grid, Box, Flex, Image, useToast, VStack } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Input } from '../components/Input';
 import { Button } from '../components/Button';
-import { api } from '../services/api';
+import { api } from '../services/apiClient';
 import { queryClient } from '../services/queryClient';
 
 interface ICreateUserFormData {
