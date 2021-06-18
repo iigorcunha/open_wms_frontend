@@ -61,7 +61,7 @@ export default function Login(): JSX.Element {
         as="form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Image src="/images/wmsLogo.svg" mb="16" />
+        <Image src="/images/logoVertical.svg" mb="16" />
         <VStack w="100%" spacing="8">
           <Input name="login" label="Login" isDark {...register('login')} />
           <Input

@@ -14,10 +14,8 @@ export function Button({ children, ...rest }: ButtonProps): JSX.Element {
       w="100%"
       borderRadius="20px"
       h="60px"
-      bg="main.green"
-      _hover={{
-        bg: 'main.lightGreen',
-      }}
+      colorScheme="greenBtn"
+      color="main.darkBlue"
       {...rest}
     >
       {children}
