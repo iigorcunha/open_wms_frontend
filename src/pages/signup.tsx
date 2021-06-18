@@ -114,13 +114,14 @@ export default function SignUp(): JSX.Element {
         as="form"
         onSubmit={handleSubmit(onSubmit, onError)}
       >
-        <Image src="/images/wmsLogo.svg" mb="8" />
+        <Image src="/images/logoVertical.svg" mb="16" />
         <VStack w="100%">
           <Input
             isDark
             name="name"
             label="Nome Completo"
             error={errors.name}
+            placeholder="João da Silva"
             {...register('name')}
           />
           <Input
@@ -128,12 +129,14 @@ export default function SignUp(): JSX.Element {
             name="login"
             label="Usuário"
             error={errors.login}
+            placeholder="usuário"
             {...register('login')}
           />
           <Input
             isDark
             name="email"
             label="Email"
+            placeholder="seuemail@email.com.br"
             error={errors.email}
             {...register('email')}
           />
@@ -141,6 +144,7 @@ export default function SignUp(): JSX.Element {
             isDark
             name="phone"
             leftInputElement="🇧🇷"
+            placeholder="XX988776655"
             label="Número de telefone"
             error={errors.phone}
             {...register('phone')}
@@ -150,6 +154,7 @@ export default function SignUp(): JSX.Element {
             name="password"
             label="Senha"
             type="password"
+            placeholder="Senha de no mínimo 6 digitos"
             error={errors.password}
             {...register('password')}
           />
@@ -157,6 +162,7 @@ export default function SignUp(): JSX.Element {
             isDark
             name="passwordConfirmation"
             label="Confirmação de Senha"
+            placeholder="Confirme sua senha igual a anterior"
             type="password"
             error={errors.passwordConfirmation}
             {...register('passwordConfirmation')}
