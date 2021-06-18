@@ -8,7 +8,8 @@ import {
   DrawerOverlay,
   useBreakpointValue,
 } from '@chakra-ui/react';
-import { useSidebarDrawer } from '../../contexts/SidebarDrawerContext';
+import { useSidebarDrawer } from '../../hooks/useSidebarDrawer';
+
 import { SidebarNav } from './SidebarNav';
 
 export function Sidebar(): JSX.Element {
@@ -23,7 +24,7 @@ export function Sidebar(): JSX.Element {
     return (
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
         <DrawerOverlay>
-          <DrawerContent bgColor="#023047" color="#F5F5F5">
+          <DrawerContent bgColor="main.darkBlue" color="main.white">
             <DrawerCloseButton mt="6" />
             <DrawerHeader>Navegação</DrawerHeader>
             <DrawerBody>
@@ -36,7 +37,7 @@ export function Sidebar(): JSX.Element {
   }
 
   return (
-    <Box as="aside" h="100vh" w={250} mr="8" bgColor="#023047" color="#F5F5F5">
+    <Box as="aside" h="100vh" bgColor="main.darkBlue" color="main.white">
       <SidebarNav />
     </Box>
   );

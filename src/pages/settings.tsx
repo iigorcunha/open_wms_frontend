@@ -4,13 +4,13 @@ import { GetServerSideProps } from 'next';
 import { Sidebar } from '../components/Sidebar';
 import { withSSRAuth } from '../utils/withSSRAuth';
 
-export default function Dashboard(): JSX.Element {
+export default function Settings(): JSX.Element {
   return (
     <Flex>
       <Sidebar />
       <Flex bg="main.white" borderRadius="20" ml="-10" p="8">
         <Heading color="main.darkBlue" my={8}>
-          Dashboard
+          Configurações
         </Heading>
       </Flex>
     </Flex>

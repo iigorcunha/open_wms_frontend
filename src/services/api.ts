@@ -1,9 +1,8 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
-import { parseCookies, setCookie } from 'nookies';
+import { parseCookies } from 'nookies';
+// eslint-disable-next-line import/no-cycle
 import { signOut } from '../contexts/AuthContext';
 import { AuthTokenError } from './errors/AuthTokenError';
-
-const failedRequestsQueue = [];
 
 export function setupApiClient(ctx = undefined): AxiosInstance {
   const cookies = parseCookies(ctx);

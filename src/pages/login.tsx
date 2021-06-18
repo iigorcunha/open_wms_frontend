@@ -1,10 +1,9 @@
 import { Grid, Image, Flex, Box, VStack, useToast } from '@chakra-ui/react';
-import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
-import { AuthContext } from '../contexts/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 
 interface SignInFormData {
   login: string;
@@ -20,7 +19,7 @@ export default function Login(): JSX.Element {
 
   const toast = useToast();
 
-  const { signIn } = useContext(AuthContext);
+  const { signIn } = useAuth();
 
   const authenticate = useMutation(
     async ({ login, password }: SignInFormData): Promise<void> => {

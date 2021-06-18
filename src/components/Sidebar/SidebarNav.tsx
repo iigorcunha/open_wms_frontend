@@ -13,10 +13,18 @@ export function SidebarNav(): JSX.Element {
     <Stack ml="6" mt="10" spacing="8" align="flex-start">
       <SidebarProfile name="Fulano de Tal" />
 
-      <SidebarLink icon={RiDashboardFill}>Dashboard</SidebarLink>
-      <SidebarLink icon={RiArchiveFill}>Estoque</SidebarLink>
-      <SidebarLink icon={RiDraftFill}>Cadastro</SidebarLink>
-      <SidebarLink icon={RiSettings5Fill}>Configurções</SidebarLink>
+      <SidebarLink href="/dashboard" icon={RiDashboardFill}>
+        Dashboard
+      </SidebarLink>
+      <SidebarLink href="/warehouse" icon={RiArchiveFill}>
+        Estoque
+      </SidebarLink>
+      <SidebarLink href="/products" icon={RiDraftFill}>
+        Cadastro
+      </SidebarLink>
+      <SidebarLink href="/settings" icon={RiSettings5Fill}>
+        Configurções
+      </SidebarLink>
     </Stack>
   );
 }
