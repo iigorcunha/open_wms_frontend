@@ -3,15 +3,15 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClientProvider } from 'react-query';
 import { theme } from '../styles/theme';
 import { queryClient } from '../services/queryClient';
-import { AppProvider } from '../components/providers/AppProvider';
+import { SidebarDrawerProvider } from '../contexts/SidebarDrawerContext';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <ChakraProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
-        <AppProvider>
+        <SidebarDrawerProvider>
           <Component {...pageProps} />
-        </AppProvider>
+        </SidebarDrawerProvider>
       </QueryClientProvider>
     </ChakraProvider>
   );

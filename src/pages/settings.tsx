@@ -16,7 +16,7 @@ export default function Stock(props): JSX.Element {
             fontWeight="900"
             color="main.darkBlue"
           >
-            Dashboard
+            Configurações
           </Text>
         </Flex>
       </Flex>
