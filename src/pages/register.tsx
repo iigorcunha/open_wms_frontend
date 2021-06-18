@@ -8,15 +8,15 @@ export default function Stock(props): JSX.Element {
       <Sidebar />
       <Flex bg="main.white" w="100vw" h="100vh" borderRadius="20">
         <Flex>
-          <Img src="/images/closedbox.svg" w="32" h="32" ml="10" mt="10" />
+          <Img src="/images/openedbox.svg" w="40" h="40" ml="10" mt="10" />
           <Text
             ml="8"
             fontSize="50"
-            mt="14"
+            mt="16"
             fontWeight="900"
             color="main.darkBlue"
           >
-            Dashboard
+            Cadastro
           </Text>
         </Flex>
       </Flex>
