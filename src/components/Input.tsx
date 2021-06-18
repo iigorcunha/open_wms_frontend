@@ -56,9 +56,9 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           fontSize="xl"
           ref={ref}
           borderColor="transparent"
-          bgColor={isDark ? 'main.darkBlue' : 'main.offWhite'}
-          _placeholder={{
-            color: isDark ? 'main.white' : 'main.darkBlue',
+          bgColor="main.offWhite"
+          _active={{
+            backgroundColor: '#ff3535',
           }}
           _hover={{
             borderColor: isDark ? 'main.offWhite' : 'main.green',

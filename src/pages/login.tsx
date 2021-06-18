@@ -18,10 +18,20 @@ export default function Login(): JSX.Element {
         alignItems="center"
         justifyContent="center"
       >
-        <Image src="/images/wmsLogo.svg" mb="16" />
-        <Input name="email" label="Email" />
-        <Input name="password" label="Senha" type="password" />
-        <Button mt="8">ENTRAR</Button>
+        <Image src="/images/logoVertical.svg" mb="16" />
+        <VStack w="100%" spacing="8">
+          <Input name="login" label="Login" isDark {...register('login')} />
+          <Input
+            name="password"
+            label="Senha"
+            type="password"
+            isDark
+            {...register('password')}
+          />
+        </VStack>
+        <Button type="submit" mt="16">
+          ENTRAR
+        </Button>
       </Flex>
     </Grid>
   );
