@@ -7,6 +7,7 @@ import {
   useToast,
   SimpleGrid,
   Button as ChakraButton,
+  Grid,
 } from '@chakra-ui/react';
 import { RiPencilLine, RiSaveLine } from 'react-icons/ri';
 import { GetServerSideProps } from 'next';
@@ -184,7 +185,6 @@ export default function Settings(): JSX.Element {
             maxW="500px"
             as="form"
             onSubmit={handleSubmit(handleChangeRegister)}
-          >
             <Text mb="5" color="main.darkBlue" fontSize="2xl" fontWeight="700">
               Perfil
             </Text>
@@ -200,6 +200,7 @@ export default function Settings(): JSX.Element {
                 {...register('name')}
               />
               <Input
+
                 isDisabled={!isEditing}
                 padding="0"
                 pl="30px"

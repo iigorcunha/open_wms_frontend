@@ -16,10 +16,16 @@ export const theme = extendTheme({
       white: '#F5F5F5',
       offWhite: '#EEEEEE',
     },
+    white: '#F5F5F5',
     greenBtn: {
       500: '#16DB93',
       600: '#14C584',
       700: '#12AF76',
+    },
+    yellowBtn: {
+      500: '#FFB703',
+      600: '#E6A503',
+      700: '#CC9202',
     },
   },
   fonts: {

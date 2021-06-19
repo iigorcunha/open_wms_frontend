@@ -23,7 +23,7 @@ export function SidebarNav(): JSX.Element {
         Cadastro
       </SidebarLink>
       <SidebarLink href="/settings" icon={RiSettings5Fill}>
-        Configurções
+        Configurações
       </SidebarLink>
     </Stack>
   );
