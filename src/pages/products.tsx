@@ -39,7 +39,22 @@ export default function Products(): JSX.Element {
             </HStack>
             <Button onClick={onOpen}>Criar Item</Button>
           </Flex>
-          <Box maxH="500px" overflowY="scroll">
+          <Box
+            maxH="500px"
+            overflowY="scroll"
+            css={{
+              '&::-webkit-scrollbar': {
+                width: '4px',
+              },
+              '&::-webkit-scrollbar-track': {
+                width: '6px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                background: '#023047',
+                borderRadius: '24px',
+              },
+            }}
+          >
             <Table>
               <Thead>
                 <Tr>

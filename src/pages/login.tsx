@@ -1,4 +1,5 @@
 import { Grid, Image, Flex, Box, VStack, useToast } from '@chakra-ui/react';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import * as yup from 'yup';
@@ -24,7 +25,9 @@ export default function Login(): JSX.Element {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const toast = useToast();
 

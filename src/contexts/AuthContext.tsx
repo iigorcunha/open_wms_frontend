@@ -46,7 +46,7 @@ let authChannel: BroadcastChannel;
 
 function signOut(): void {
   destroyCookie(undefined, '@openwms.token');
-  localStorage.removeItem('openwms.user');
+  localStorage.removeItem('@openwms.user');
 
   authChannel.postMessage('signOut');
 
@@ -109,7 +109,8 @@ function AuthProvider({ children }: AuthProviderProps): JSX.Element {
     } catch (err) {
       toast({
         status: 'error',
-        title: err.response.data.error,
+        title: 'Algo deu errado!',
+        description: err.response.data.error,
         position: 'top-right',
       });
     }

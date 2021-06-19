@@ -115,30 +115,40 @@ export function ModalRegisterItem({
             onSubmit={handleSubmit(onSubmit)}
           >
             <VStack>
-              <Input name="code" label="Código" {...register('code')} />
+              <Input
+                name="code"
+                label="Código"
+                error={errors.code}
+                {...register('code')}
+              />
               <Input
                 name="name"
                 label="Nome do produto"
+                error={errors.name}
                 {...register('name')}
               />
               <Input
                 name="category"
                 label="Categoria"
+                error={errors.category}
                 {...register('category')}
               />
               <Input
                 name="measureUnity"
                 label="Unidade de medida"
+                error={errors.measureUnity}
                 {...register('measureUnity')}
               />
               <Input
                 name="daysToNotifyExpirationDate"
                 label="Dias mínimos para vencer (opcional)"
+                error={errors.daysToNotifyExpirationDate}
                 {...register('daysToNotifyExpirationDate')}
               />
               <Input
                 name="minimumStock"
                 label="Estoque mínimo (opcional)"
+                error={errors.minimumStock}
                 {...register('minimumStock')}
               />
             </VStack>

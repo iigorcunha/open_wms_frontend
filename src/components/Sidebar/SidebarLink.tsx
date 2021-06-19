@@ -31,9 +31,11 @@ export function SidebarLink({
         pr="16"
         borderLeftRadius="25"
         textDecorationLine="none"
+        maxW={240}
+        w="100%"
       >
         <Icon as={icon} w="9" h="9" />
-        <Text mt="1" ml="2" fontWeight="bold" textDecor="none">
+        <Text mt="1" ml="2" fontWeight="bold" textDecor="none" w="100%">
           {children}
         </Text>
       </ChakraLink>

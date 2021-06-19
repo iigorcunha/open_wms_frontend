@@ -7,7 +7,6 @@ import {
   useToast,
   SimpleGrid,
   Button as ChakraButton,
-  Grid,
 } from '@chakra-ui/react';
 import { RiPencilLine, RiSaveLine } from 'react-icons/ri';
 import { GetServerSideProps } from 'next';
@@ -86,7 +85,7 @@ export default function Settings(): JSX.Element {
       setValue('login', user.login);
       setValue('phone', user.phone);
     }
-  }, [user]);
+  }, [user, setValue]);
 
   const handleChangeRegister = async ({
     name,
@@ -109,7 +108,7 @@ export default function Settings(): JSX.Element {
         duration: 3000,
         status: 'error',
         title: 'Algo deu errado',
-        description: 'Usuário/senha incorretos!',
+        description: err.response.data.error,
         position: 'top-right',
       });
     }
@@ -146,7 +145,7 @@ export default function Settings(): JSX.Element {
     }
   };
 
-  const handleAlerts = async (event): Promise<void> => {
+  const handleAlerts = async (event: React.FormEvent): Promise<void> => {
     try {
       event.preventDefault();
     } catch (err) {
@@ -179,32 +178,44 @@ export default function Settings(): JSX.Element {
             Configurações
           </Heading>
         </Flex>
-        <Flex overflowY="scroll" w="100%" maxW={1480} flexWrap="wrap" p="8">
+        <Flex
+          overflowY="auto"
+          w="100%"
+          maxW={1480}
+          flexWrap="wrap"
+          p="8"
+          css={{
+            '&::-webkit-scrollbar': {
+              width: '4px',
+            },
+            '&::-webkit-scrollbar-track': {
+              width: '6px',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              background: '#023047',
+              borderRadius: '24px',
+            },
+          }}
+        >
           <Box
             w="100%"
             maxW="500px"
             as="form"
             onSubmit={handleSubmit(handleChangeRegister)}
+          >
             <Text mb="5" color="main.darkBlue" fontSize="2xl" fontWeight="700">
               Perfil
             </Text>
             <Stack align="center" mb="8">
               <Input
                 isDisabled={!isEditing}
-                padding="0"
-                pl="30px"
-                height="50px"
                 name="name"
                 label="Nome"
                 error={errors.name}
                 {...register('name')}
               />
               <Input
-
                 isDisabled={!isEditing}
-                padding="0"
-                pl="30px"
-                height="50px"
                 name="login"
                 label="Usuario:"
                 error={errors.login}
@@ -212,9 +223,6 @@ export default function Settings(): JSX.Element {
               />
               <Input
                 isDisabled={!isEditing}
-                padding="0"
-                pl="30px"
-                height="50px"
                 name="email"
                 label="Email"
                 error={errors.email}
@@ -222,9 +230,6 @@ export default function Settings(): JSX.Element {
               />
               <Input
                 isDisabled={!isEditing}
-                padding="0"
-                pl="30px"
-                height="50px"
                 name="phone"
                 label="Telefone:"
                 error={errors.phone}
@@ -343,9 +348,6 @@ export default function Settings(): JSX.Element {
             <Stack align="center">
               <Input
                 type="password"
-                padding="0"
-                pl="30px"
-                height="50px"
                 name="oldPassword"
                 label="Senha antiga"
                 error={errorsPassword.oldPassword}
@@ -353,9 +355,6 @@ export default function Settings(): JSX.Element {
               />
               <Input
                 type="password"
-                padding="0"
-                pl="30px"
-                height="50px"
                 name="newPassword"
                 label="Nova senha"
                 error={errorsPassword.newPassword}
@@ -363,9 +362,6 @@ export default function Settings(): JSX.Element {
               />
               <Input
                 type="password"
-                padding="0"
-                pl="30px"
-                height="50px"
                 name="newPasswordConfirm"
                 label="Confirmação de nova senha"
                 error={errorsPassword.newPasswordConfirm}

@@ -27,6 +27,11 @@ export const theme = extendTheme({
       600: '#E6A503',
       700: '#CC9202',
     },
+    blueBtn: {
+      500: '#219EBC',
+      600: '#1E8EA9',
+      700: '#1A7E96',
+    },
   },
   fonts: {
     heading: 'Quicksand',
