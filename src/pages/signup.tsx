@@ -89,6 +89,7 @@ export default function SignUp(): JSX.Element {
 
       router.push('/login');
     } catch (err) {
+      console.log(err);
       toast({
         duration: 3000,
         status: 'error',

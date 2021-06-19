@@ -16,7 +16,7 @@ export function SidebarNav(): JSX.Element {
       <SidebarLink href="/dashboard" icon={RiDashboardFill}>
         Dashboard
       </SidebarLink>
-      <SidebarLink href="/warehouse" icon={RiArchiveFill}>
+      <SidebarLink href="/stock" icon={RiArchiveFill}>
         Estoque
       </SidebarLink>
       <SidebarLink href="/products" icon={RiDraftFill}>

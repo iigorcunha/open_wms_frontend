@@ -62,10 +62,17 @@ export default function Login(): JSX.Element {
       >
         <Image src="/images/logoVertical.svg" mb="16" />
         <VStack w="100%" spacing="8">
-          <Input name="login" label="Login" isDark {...register('login')} />
+          <Input
+            name="login"
+            placeholder="Nome de usuário"
+            label="Login"
+            isDark
+            {...register('login')}
+          />
           <Input
             name="password"
             label="Senha"
+            placeholder="Digite sua senha secreta"
             type="password"
             isDark
             {...register('password')}

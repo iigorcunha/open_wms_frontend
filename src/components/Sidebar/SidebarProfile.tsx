@@ -2,10 +2,6 @@ import { Flex, Avatar, Text, IconButton, Icon } from '@chakra-ui/react';
 import { RiShutDownLine } from 'react-icons/ri';
 import { useAuth } from '../../hooks/useAuth';
 
-interface SidebarProfileProps {
-  name: string;
-}
-
 export function SidebarProfile(): JSX.Element {
   const { signOut, user } = useAuth();
   return (
@@ -25,7 +21,7 @@ export function SidebarProfile(): JSX.Element {
         bgColor="#F5F5F5"
       />
       <Text mr="10" fontWeight="bold">
-        {user.login}
+        {user?.login}
       </Text>
 
       <IconButton

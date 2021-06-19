@@ -36,6 +36,7 @@ let authChannel: BroadcastChannel;
 
 function signOut(): void {
   destroyCookie(undefined, '@openwms.token');
+  localStorage.removeItem('openwms.user');
 
   authChannel.postMessage('signOut');
 
@@ -47,6 +48,14 @@ function AuthProvider({ children }: AuthProviderProps): JSX.Element {
   const isAuthenticated = !!user;
 
   const toast = useToast();
+
+  useEffect(() => {
+    const getUser = localStorage.getItem('@openwms.user');
+
+    if (getUser) {
+      setUser(JSON.parse(getUser));
+    }
+  }, []);
 
   useEffect(() => {
     authChannel = new BroadcastChannel('auth');
@@ -80,6 +89,8 @@ function AuthProvider({ children }: AuthProviderProps): JSX.Element {
       });
 
       setUser(userData as User);
+
+      localStorage.setItem('@openwms.user', JSON.stringify(userData));
 
       api.defaults.headers.Authorization = `Bearer ${token}`;
 
