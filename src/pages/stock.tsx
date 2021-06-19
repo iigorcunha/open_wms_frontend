@@ -33,8 +33,6 @@ export default function Warehouse(): JSX.Element {
 }
 
 export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
-  setupApiClient(ctx);
-  console.log('inside stock: ', ctx);
   return {
     props: {},
   };

@@ -26,7 +26,6 @@ export function withSSRAuth<P>(fn: GetServerSideProps<P>): GetServerSideProps {
     try {
       return await fn(ctx);
     } catch (err) {
-      console.log('Call Signout in withSSRAuth');
       if (err instanceof AuthTokenError) {
         destroyCookie(ctx, '@openwms.token');
 

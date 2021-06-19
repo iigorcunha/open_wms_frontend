@@ -6,6 +6,7 @@ import {
   Stack,
   useToast,
   Button as ChakraButton,
+  Grid,
 } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { useForm } from 'react-hook-form';
@@ -136,154 +137,157 @@ export default function Settings(): JSX.Element {
         p="8"
         flexDirection="column"
         w="100%"
+        h="100vh"
       >
         <Heading color="main.darkBlue" my={8}>
           Configurações
         </Heading>
-        <Flex>
-          <Box maxW="400px" w="100vw" mr="20">
+        <Flex w="80%" flexWrap="wrap" overflowY="scroll">
+          <Box
+            as="form"
+            onSubmit={handleSubmit(handleChangeRegister)}
+            minW="50%"
+          >
             <Text mb="5" color="main.darkBlue" fontSize="2xl" fontWeight="700">
               Perfil
             </Text>
-            <Box as="form" onSubmit={handleSubmit(handleChangeRegister)}>
-              <Stack align="center" mb="8">
-                <Input
-                  padding="0"
-                  pl="30px"
-                  height="50px"
-                  name="name"
-                  label="Nome"
-                  error={errors.name}
-                  {...register('name')}
-                />
-                <Input
-                  padding="0"
-                  pl="30px"
-                  height="50px"
-                  name="email"
-                  label="Email"
-                  error={errors.email}
-                  {...register('email')}
-                />
-                <Button type="submit" maxW="250px">
-                  <Text color="main.darkBlue" fontSize="2xl" fontWeight="700">
-                    Alterar Cadastro
-                  </Text>
-                </Button>
-              </Stack>
-            </Box>
-            <Box
-              as="form"
-              onSubmit={handleSubmitPassword(handleChangePassword)}
-            >
-              <Stack align="center">
-                <Input
-                  type="password"
-                  padding="0"
-                  pl="30px"
-                  height="50px"
-                  name="oldPassword"
-                  label="Senha antiga"
-                  error={errorsPassword.oldPassword}
-                  {...registerPassword('oldPassword')}
-                />
-                <Input
-                  type="password"
-                  padding="0"
-                  pl="30px"
-                  height="50px"
-                  name="newPassword"
-                  label="Nova senha"
-                  error={errorsPassword.newPassword}
-                  {...registerPassword('newPassword')}
-                />
-                <Input
-                  type="password"
-                  padding="0"
-                  pl="30px"
-                  height="50px"
-                  name="newPasswordConfirm"
-                  label="Confirmação de nova senha"
-                  error={errorsPassword.newPasswordConfirm}
-                  {...registerPassword('newPasswordConfirm')}
-                />
-                <Button type="submit" maxW="250px">
-                  <Text color="main.darkBlue" fontSize="2xl" fontWeight="700">
-                    Alterar Senha
-                  </Text>
-                </Button>
-              </Stack>
-            </Box>
+            <Stack align="center" mb="8">
+              <Input
+                padding="0"
+                pl="30px"
+                height="50px"
+                name="name"
+                label="Nome"
+                error={errors.name}
+                {...register('name')}
+              />
+              <Input
+                padding="0"
+                pl="30px"
+                height="50px"
+                name="email"
+                label="Email"
+                error={errors.email}
+                {...register('email')}
+              />
+              <Button type="submit" maxW="250px">
+                <Text color="main.darkBlue" fontSize="2xl" fontWeight="700">
+                  Alterar Cadastro
+                </Text>
+              </Button>
+            </Stack>
           </Box>
-          <Box maxW="350px" w="100vw">
+          <Box
+            as="form"
+            onSubmit={handleSubmitPassword(handleChangePassword)}
+            minW="50%"
+          >
+            <Stack align="center">
+              <Input
+                type="password"
+                padding="0"
+                pl="30px"
+                height="50px"
+                name="oldPassword"
+                label="Senha antiga"
+                error={errorsPassword.oldPassword}
+                {...registerPassword('oldPassword')}
+              />
+              <Input
+                type="password"
+                padding="0"
+                pl="30px"
+                height="50px"
+                name="newPassword"
+                label="Nova senha"
+                error={errorsPassword.newPassword}
+                {...registerPassword('newPassword')}
+              />
+              <Input
+                type="password"
+                padding="0"
+                pl="30px"
+                height="50px"
+                name="newPasswordConfirm"
+                label="Confirmação de nova senha"
+                error={errorsPassword.newPasswordConfirm}
+                {...registerPassword('newPasswordConfirm')}
+              />
+              <Button type="submit" maxW="250px">
+                <Text color="main.darkBlue" fontSize="2xl" fontWeight="700">
+                  Alterar Senha
+                </Text>
+              </Button>
+            </Stack>
+          </Box>
+
+          <Box as="form" onSubmit={handleAlerts}>
             <Text mb="12" color="main.darkBlue" fontSize="2xl" fontWeight="700">
               Notificações
             </Text>
-            <Box as="form" onSubmit={handleAlerts}>
-              <Stack spacing="8">
-                <Flex
-                  align="center"
-                  color="main.darkBlue"
-                  fontSize="2xl"
-                  fontWeight="700"
+            <Stack spacing="8">
+              <Flex
+                align="center"
+                color="main.darkBlue"
+                fontSize="2xl"
+                fontWeight="700"
+              >
+                <Text>Ativar alertas por email:</Text>
+                <ChakraButton
+                  ml="auto"
+                  w="48px"
+                  h="48px"
+                  bg="main.offWhite"
+                  borderRadius="10px"
+                  p="0"
+                  onClick={() => setNotifyEmail(!notifyEmail)}
                 >
-                  <Text>Ativar alertas por email:</Text>
-                  <ChakraButton
-                    ml="auto"
-                    w="48px"
-                    h="48px"
-                    bg="main.offWhite"
-                    borderRadius="10px"
-                    p="0"
-                    onClick={() => setNotifyEmail(!notifyEmail)}
-                  >
-                    {notifyEmail && (
-                      <Box
-                        w="32px"
-                        h="32px"
-                        bg="main.darkBlue"
-                        borderRadius="10px"
-                        m="auto"
-                      />
-                    )}
-                  </ChakraButton>
-                </Flex>
-                <Flex
-                  align="center"
-                  color="main.darkBlue"
-                  fontSize="2xl"
-                  fontWeight="700"
+                  {notifyEmail && (
+                    <Box
+                      w="32px"
+                      h="32px"
+                      bg="main.darkBlue"
+                      borderRadius="10px"
+                      m="auto"
+                    />
+                  )}
+                </ChakraButton>
+              </Flex>
+              <Flex
+                align="center"
+                color="main.darkBlue"
+                fontSize="2xl"
+                fontWeight="700"
+              >
+                <Text>Ativar alertas por sms: </Text>
+                <ChakraButton
+                  ml="auto"
+                  w="48px"
+                  h="48px"
+                  bg="main.offWhite"
+                  borderRadius="10px"
+                  p="0"
+                  onClick={() => setNotifySms(!notifySms)}
                 >
-                  <Text>Ativar alertas por sms: </Text>
-                  <ChakraButton
-                    ml="auto"
-                    w="48px"
-                    h="48px"
-                    bg="main.offWhite"
-                    borderRadius="10px"
-                    p="0"
-                    onClick={() => setNotifySms(!notifySms)}
-                  >
-                    {notifySms && (
-                      <Box
-                        w="32px"
-                        h="32px"
-                        bg="main.darkBlue"
-                        borderRadius="10px"
-                        m="auto"
-                      />
-                    )}
-                  </ChakraButton>
-                </Flex>
-                <Flex w="100%" justify="center">
-                  <Button type="submit" maxW="250px">
-                    <Text color="main.darkBlue" fontSize="2xl" fontWeight="700">
-                      Salvar alertas
-                    </Text>
-                  </Button>
-                </Flex>
-              </Stack>
-            </Box>
+                  {notifySms && (
+                    <Box
+                      w="32px"
+                      h="32px"
+                      bg="main.darkBlue"
+                      borderRadius="10px"
+                      m="auto"
+                    />
+                  )}
+                </ChakraButton>
+              </Flex>
+              <Flex w="100%" justify="center">
+                <Button type="submit" maxW="250px">
+                  <Text color="main.darkBlue" fontSize="2xl" fontWeight="700">
+                    Salvar alertas
+                  </Text>
+                </Button>
+              </Flex>
+            </Stack>
           </Box>
         </Flex>
       </Flex>
