@@ -19,10 +19,14 @@ export function setupApiClient(ctx = undefined): AxiosInstance {
       return response;
     },
     (error: AxiosError) => {
-      if (process.browser) {
-        signOut();
-      } else {
-        return Promise.reject(new AuthTokenError());
+      if (error.response.status === 401) {
+        if (error.response.data?.code === 'tokenExpiredOrInvalid') {
+          if (process.browser) {
+            signOut();
+          } else {
+            return Promise.reject(new AuthTokenError());
+          }
+        }
       }
 
       return Promise.reject(error);

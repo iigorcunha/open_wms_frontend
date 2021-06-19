@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import {
   GetServerSideProps,
   GetServerSidePropsContext,
@@ -11,6 +12,7 @@ export function withSSRAuth<P>(fn: GetServerSideProps<P>): GetServerSideProps {
     ctx: GetServerSidePropsContext
   ): Promise<GetServerSidePropsResult<P>> => {
     const cookies = parseCookies(ctx);
+
     const token = cookies['@openwms.token'];
     if (!token) {
       return {
@@ -24,6 +26,7 @@ export function withSSRAuth<P>(fn: GetServerSideProps<P>): GetServerSideProps {
     try {
       return await fn(ctx);
     } catch (err) {
+      console.log('Call Signout in withSSRAuth');
       if (err instanceof AuthTokenError) {
         destroyCookie(ctx, '@openwms.token');
 
@@ -35,12 +38,5 @@ export function withSSRAuth<P>(fn: GetServerSideProps<P>): GetServerSideProps {
         };
       }
     }
-
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
   };
 }

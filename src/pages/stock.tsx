@@ -1,6 +1,7 @@
 import { Flex, Text, HStack, Img } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { Sidebar } from '../components/Sidebar';
+import { setupApiClient } from '../services/api';
 import { withSSRAuth } from '../utils/withSSRAuth';
 
 export default function Warehouse(): JSX.Element {
@@ -32,6 +33,8 @@ export default function Warehouse(): JSX.Element {
 }
 
 export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
+  setupApiClient(ctx);
+  console.log('inside stock: ', ctx);
   return {
     props: {},
   };
