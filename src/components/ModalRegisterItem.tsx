@@ -7,6 +7,7 @@ import {
   ModalBody,
   Flex,
   VStack,
+  useToast,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
@@ -38,8 +39,11 @@ export function ModalRegisterItem({
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors },
   } = useForm();
+
+  const toast = useToast();
 
   const createItem = useMutation(
     async ({
@@ -69,8 +73,24 @@ export function ModalRegisterItem({
   const onSubmit = async (item: CreateItemFormData): Promise<void> => {
     try {
       await createItem.mutateAsync(item);
+
+      reset();
+
+      onClose();
+
+      toast({
+        status: 'success',
+        title: 'Sucesso!',
+        description: 'O produto foi criado com sucesso!',
+        position: 'top-right',
+      });
     } catch (err) {
-      console.log(err);
+      toast({
+        status: 'error',
+        title: 'Algo deu errado!',
+        description: err.response.data?.error,
+        position: 'top-right',
+      });
     }
   };
   return (
