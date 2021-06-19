@@ -19,9 +19,19 @@ type SignInCredentials = {
   password: string;
 };
 
+type UserInformation = {
+  name?: string;
+  email?: string;
+  login?: string;
+  phone?: string;
+  newPassword?: string;
+  currentPassword?: string;
+};
+
 export type AuthContextData = {
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut: () => void;
+  updateUserInformation: (userCredentials: UserInformation) => Promise<boolean>;
   user: User;
   isAuthenticated: boolean;
 };
@@ -105,8 +115,41 @@ function AuthProvider({ children }: AuthProviderProps): JSX.Element {
     }
   }
 
+  async function updateUserInformation({
+    email = '',
+    login = '',
+    name = '',
+    phone = '',
+    newPassword = '',
+    currentPassword = '',
+  }: UserInformation): Promise<boolean> {
+    try {
+      const response = await api.put(`users/${user.id}`, {
+        name,
+        email: user?.email === email ? '' : email,
+        login: user?.login === login ? '' : login,
+        phone: user?.phone === phone ? '' : phone,
+        newPassword,
+        currentPassword,
+      });
+      const { user: userData } = response.data;
+      localStorage.setItem('@openwms.user', JSON.stringify(userData));
+      setUser(userData);
+      return true;
+    } catch (err) {
+      toast({
+        status: 'error',
+        title: err.response.data.error,
+        position: 'top-right',
+      });
+      return false;
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ signIn, signOut, user, isAuthenticated }}>
+    <AuthContext.Provider
+      value={{ signIn, signOut, user, isAuthenticated, updateUserInformation }}
+    >
       {children}
     </AuthContext.Provider>
   );
