@@ -1,4 +1,4 @@
-import { Flex, VStack, Image, Text, CircularProgress } from '@chakra-ui/react';
+import { Flex, VStack, Image } from '@chakra-ui/react';
 
 interface LayoutMailVerificationProps {
   children: React.ReactElement | React.ReactElement[];

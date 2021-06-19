@@ -1,16 +1,23 @@
-import { Flex, VStack, Image, Text, Spinner } from '@chakra-ui/react';
+import { VStack, Image, Text, Spinner } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { LayoutMailVerification } from '../../components/LayoutMailVerification';
+import { api } from '../../services/apiClient';
 
 export default function MailVerification(): JSX.Element {
   const [status, setStatus] = useState('');
+
   const { query } = useRouter();
-  const { verify } = query;
+
+  const { verify: token } = query;
 
   useEffect(() => {
-    setStatus('');
-  }, []);
+    if (token) {
+      api
+        .patch(`/users/verify/${token}`)
+        .then(response => setStatus(response.data.status));
+    }
+  }, [token]);
 
   if (!status) {
     return (
