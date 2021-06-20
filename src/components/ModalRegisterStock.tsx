@@ -7,12 +7,14 @@ import {
   ModalBody,
   Flex,
   VStack,
+  HStack,
   useToast,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { api } from '../services/apiClient';
 import { queryClient } from '../services/queryClient';
+import { RadioCard } from './RadioCard';
 
 import { Button } from './Button';
 import { Input } from './Input';
@@ -138,7 +140,12 @@ export function ModalRegisterStock({
                 label="Valor unitário"
                 {...register('value')}
               />
+              <HStack spacing="20">
+                <RadioCard name="Entrada" color="white" bg="green" />
+                <RadioCard name="Saída" color="white" bg="red" />
+              </HStack>
             </VStack>
+
             <Button type="submit" mt="16">
               Cadastrar
             </Button>

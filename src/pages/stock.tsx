@@ -19,6 +19,7 @@ import { Sidebar } from '../components/Sidebar';
 import { Button } from '../components/Button';
 import { setupApiClient } from '../services/api';
 import { withSSRAuth } from '../utils/withSSRAuth';
+import { RadioCard } from '../components/RadioCard';
 
 export default function Warehouse(): JSX.Element {
   const { isOpen, onClose, onOpen } = useDisclosure();
