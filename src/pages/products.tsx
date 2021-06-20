@@ -68,6 +68,7 @@ export default function Products(): JSX.Element {
                 </Tr>
                 <Tr>
                   <Td>1</Td>
+                  <Td>1</Td>
                   <Td>Produto 1</Td>
                   <Td>Bebidas</Td>
                   <Td>Entrada</Td>
