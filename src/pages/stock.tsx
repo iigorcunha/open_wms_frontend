@@ -17,9 +17,7 @@ import { GetServerSideProps } from 'next';
 import { ModalRegisterStock } from '../components/ModalRegisterStock';
 import { Sidebar } from '../components/Sidebar';
 import { Button } from '../components/Button';
-import { setupApiClient } from '../services/api';
 import { withSSRAuth } from '../utils/withSSRAuth';
-import { RadioCard } from '../components/RadioCard';
 
 export default function Warehouse(): JSX.Element {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -30,16 +28,16 @@ export default function Warehouse(): JSX.Element {
         <Flex w="100%" flexDir="column" justifyContent="space-around" m="0">
           <HStack>
             <Img src="images/openedbox.svg" />
-            <Heading>Cadastro de produtos</Heading>
+            <Heading>Estoque</Heading>
           </HStack>
           <Flex w="100%" justifyContent="space-between" align="space-between">
             <HStack spacing="6">
-              <Text fontSize="2xl" fontWeight="600" color="main.darkBlue">
-                Lista de produtos
+              <Text fontSize="2xl" fontWeight="bold" color="main.darkBlue">
+                Produtos
               </Text>
               <Button>filtro</Button>
             </HStack>
-            <Button onClick={onOpen}>Criar Item</Button>
+            <Button onClick={onOpen}>Adicionar ao estoque</Button>
           </Flex>
           <Box maxH="500px" overflowY="scroll">
             <Table>

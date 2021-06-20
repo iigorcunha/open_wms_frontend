@@ -22,8 +22,8 @@ export function RadioCard({ name, color, bg }: RadioCardProps): JSX.Element {
         borderRadius="md"
         boxShadow="md"
         fontWeight="bold"
-        color="darkBlue"
-        bg="white"
+        color="main.darkBlue"
+        bg="main.white"
         _focus={{
           boxShadow: 'outline',
           bg: `${bg}`,
