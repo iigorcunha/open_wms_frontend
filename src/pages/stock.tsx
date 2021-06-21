@@ -27,6 +27,7 @@ import { Sidebar } from '../components/Sidebar';
 import { Button } from '../components/Button';
 import { withSSRAuth } from '../utils/withSSRAuth';
 import { api } from '../services/apiClient';
+import { setupApiClient } from '../services/api';
 
 interface Stock {
   id: string;
@@ -52,19 +53,14 @@ interface FilterFormData {
   filterByItem: string;
 }
 
-export default function Stock(): JSX.Element {
+interface StockProps {
+  listItems: Item[];
+}
+
+export default function Stock({ listItems }: StockProps): JSX.Element {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { handleSubmit, register } = useForm();
   const [filterItems, setFilterItems] = useState('');
-
-  // const [stockListByItems, setStockListByItems] = useState<StockData>({
-  //   stocks: [],
-  //   item: null,
-  // });
-
-  const { data: listItems } = useQuery('getItems', () =>
-    api.get('/items').then(response => response.data.items)
-  );
 
   const { isLoading, refetch, data } = useQuery(
     ['getStock', filterItems],
@@ -80,7 +76,6 @@ export default function Stock(): JSX.Element {
 
   useEffect(() => {
     if (filterItems) {
-      console.log(filterItems);
       refetch();
     }
   }, [filterItems, refetch]);
@@ -131,11 +126,12 @@ export default function Stock(): JSX.Element {
               placeholder="Select option"
               onSelect={event => setFilterItems(event.currentTarget.value)}
             >
-              {listItems?.map(item => (
-                <option key="id" value={item.id}>
-                  {item.name}
-                </option>
-              ))}
+              {listItems &&
+                listItems.map(item => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
             </Select>
             <Button type="submit">Filtrar</Button>
           </HStack>
@@ -206,8 +202,15 @@ export default function Stock(): JSX.Element {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
-  return {
-    props: {},
-  };
-});
+export const getServerSideProps: GetServerSideProps<StockProps> = withSSRAuth(
+  async ctx => {
+    const apiClient = setupApiClient(ctx);
+
+    const response = await apiClient.get('/items');
+    return {
+      props: {
+        listItems: response.data.items,
+      },
+    };
+  }
+);
