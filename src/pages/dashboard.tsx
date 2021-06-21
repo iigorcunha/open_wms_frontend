@@ -20,6 +20,7 @@ import { theme } from '../styles/theme';
 import { Sidebar } from '../components/Sidebar';
 import { api } from '../services/apiClient';
 import { withSSRAuth } from '../utils/withSSRAuth';
+import { setupApiClient } from '../services/api';
 
 interface ItemSummaryData {
   item: {
@@ -37,6 +38,17 @@ interface ItemSummaryData {
   };
   totalQtd: number;
   balance: number;
+}
+
+interface Dashboard {
+  itemId: string;
+  itemName: string;
+  balance: number;
+  totalQtd: number;
+}
+
+interface DashboardProps {
+  dashboard: Dashboard[];
 }
 
 const Chart = dynamic(() => import('react-apexcharts'), {
@@ -72,25 +84,27 @@ const options = {
   },
 };
 
-export default function Dashboard(): JSX.Element {
+export default function Dashboard({
+  dashboard = [],
+}: DashboardProps): JSX.Element {
   const [itemsSummary, setItemsSummary] = useState<ItemSummaryData[]>([]);
   const [chartData, setChartData] = useState([]);
-  const { isLoading, isError, error } = useQuery('getStock', () =>
-    api.get('/stocks/dashboard').then(response => {
-      setItemsSummary(response.data);
-      setChartData(
-        response.data.map(is => {
-          return {
-            itemId: is.item.id,
-            itemName: is.item.name,
-            balance: is.balance,
-            totalQtd: is.totalQtd,
-            measureunity: is.item.measureunity,
-          };
-        })
-      );
-    })
-  );
+  // const { isLoading, isError, error } = useQuery('getStock', () =>
+  //   api.get('/stocks/dashboard').then(response => {
+  //     setItemsSummary(response.data);
+  //     setChartData(
+  //       response.data.map(is => {
+  //         return {
+  //           itemId: is.item.id,
+  //           itemName: is.item.name,
+  //           balance: is.balance,
+  //           totalQtd: is.totalQtd,
+  //           measureunity: is.item.measureunity,
+  //         };
+  //       })
+  //     );
+  //   })
+  // );
 
   return (
     <Flex w="100vw">
@@ -118,10 +132,12 @@ export default function Dashboard(): JSX.Element {
                       formatter: val => `R$ ${val}`,
                     },
                   },
-                  xaxis: { categories: chartData.map(cd => cd.itemName) },
+                  xaxis: {
+                    categories: dashboard.map(cd => cd.itemName),
+                  },
                 }}
                 series={[
-                  { name: 'Saldo', data: chartData.map(cd => cd.balance) },
+                  { name: 'Saldo', data: dashboard.map(cd => cd.balance) },
                 ]}
                 type="bar"
                 height={160}
@@ -132,10 +148,10 @@ export default function Dashboard(): JSX.Element {
               <Chart
                 options={{
                   ...options,
-                  xaxis: { categories: chartData.map(cd => cd.itemName) },
+                  xaxis: { categories: dashboard.map(cd => cd.itemName) },
                 }}
                 series={[
-                  { name: 'Total', data: chartData.map(cd => cd.totalQtd) },
+                  { name: 'Total', data: dashboard.map(cd => cd.totalQtd) },
                 ]}
                 type="bar"
                 height={160}
@@ -149,7 +165,21 @@ export default function Dashboard(): JSX.Element {
 }
 
 export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
+  const apiClient = setupApiClient(ctx);
+
+  const response = await apiClient.get('/stocks/dashboard');
+  const dashboard = response.data.dashboardData.map(dash => {
+    return {
+      itemId: dash.item.id,
+      itemName: dash.item.name,
+      balance: dash.balance,
+      totalQtd: dash.totalQtd,
+    };
+  });
+
   return {
-    props: {},
+    props: {
+      dashboard,
+    },
   };
 });

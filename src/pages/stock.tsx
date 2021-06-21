@@ -187,8 +187,8 @@ export default function Stock({ listItems }: StockProps): JSX.Element {
                           />
                         )}
                       </Td>
-                      <Td>R$ {stock.quantity}</Td>
-                      <Td>{stock.value}</Td>
+                      <Td>{stock.quantity}</Td>
+                      <Td>R$ {stock.value}</Td>
                     </Tr>
                   ))}
                 </Tbody>
