@@ -88,7 +88,7 @@ export function ModalRegisterStock({
     }
   );
 
-  const { isLoading, error, data } = useQuery('filterItems', () =>
+  const { isLoading, error, data } = useQuery('getItems', () =>
     api.get('/items').then(response => response.data)
   );
 
