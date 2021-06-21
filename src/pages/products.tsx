@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import {
   Flex,
   useDisclosure,
@@ -12,246 +13,141 @@ import {
   Td,
   Image,
   Box,
+  Spinner,
+  Grid,
 } from '@chakra-ui/react';
+import { format } from 'date-fns';
 import { GetServerSideProps } from 'next';
+import { useQuery } from 'react-query';
+import { useEffect, useState } from 'react';
 import { ModalRegisterItem } from '../components/ModalRegisterItem';
 import { Button } from '../components/Button';
 import { Sidebar } from '../components/Sidebar';
 import { withSSRAuth } from '../utils/withSSRAuth';
+import { api } from '../services/apiClient';
+
+interface Item {
+  userId: string;
+  name: string;
+  category: string;
+  minimumStock: number;
+  daysToNotifyExpirationDate: number;
+  measureunity: string;
+  id: string;
+  createdat: Date;
+}
 
 export default function Products(): JSX.Element {
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const [listItems, setListItems] = useState<Item[]>([]);
+
+  const { isLoading, isError, error, data } = useQuery('getStock', () =>
+    api.get('/items').then(response => {
+      const { items } = response.data;
+      const newItems = items.map(item => {
+        return {
+          userId: item.userId,
+          name: item.name,
+          category: item.category,
+          minimumStock: item.minimumStock,
+          daysToNotifyExpirationDate: item.daysToNotifyExpirationDate,
+          measureunity: item.measureunity,
+          id: item.id,
+          createdat: format(new Date(item.createdat), 'dd/MM/yyyy'),
+        };
+      });
+      setListItems(newItems);
+    })
+  );
+
   return (
     <Flex w="100%">
       <Sidebar />
-      <Flex bg="main.white" w="100%" borderRadius="20" ml="-10" p="8">
-        <Flex w="100%" flexDir="column" justifyContent="space-around" m="8">
-          <HStack>
-            <Image src="images/openedbox.svg" />
-            <Heading>Cadastro de produtos</Heading>
+      <Grid
+        templateAreas="'title' 'middleBlock' '1fr 1fr 1fr'"
+        bg="main.white"
+        w="100vw"
+        borderRadius="20"
+        ml="-10"
+        p="8"
+      >
+        <HStack id="title" ml="8">
+          <Image src="images/openedbox.svg" />
+
+          <Heading>Cadastro de produtos</Heading>
+        </HStack>
+        <Flex
+          w="100%"
+          justifyContent="space-between"
+          align="center"
+          id="middleBlock"
+          mx="8"
+        >
+          <HStack spacing="6" w="30%">
+            <Text
+              fontSize="2xl"
+              w="100%"
+              fontWeight="600"
+              color="main.darkBlue"
+            >
+              Lista de produtos
+            </Text>
           </HStack>
-          <Flex w="100%" justifyContent="space-between" align="space-between">
-            <HStack spacing="6">
-              <Text fontSize="2xl" fontWeight="600" color="main.darkBlue">
-                Lista de produtos
-              </Text>
-              <Button>filtro</Button>
-            </HStack>
-            <Button onClick={onOpen}>Criar Item</Button>
-          </Flex>
-          <Box
-            maxH="500px"
-            overflowY="scroll"
-            css={{
-              '&::-webkit-scrollbar': {
-                width: '4px',
-              },
-              '&::-webkit-scrollbar-track': {
-                width: '6px',
-              },
-              '&::-webkit-scrollbar-thumb': {
-                background: '#023047',
-                borderRadius: '24px',
-              },
-            }}
-          >
-            <Table>
-              <Thead>
-                <Tr>
-                  <Th>Código</Th>
-                  <Th>Nome</Th>
-                  <Th>Categoria</Th>
-                  <Th>Tipo</Th>
-                  <Th>Data</Th>
-                  <Th>Qtde</Th>
-                  <Th>Und</Th>
-                  <Th>Valor</Th>
-                  <Th>Criado em</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                <Tr>
-                  <Td>1</Td>
-                  <Td>Produto 1</Td>
-                  <Td>Bebidas</Td>
-                  <Td>Entrada</Td>
-                  <Td>20/01/2021</Td>
-                  <Td>10</Td>
-                  <Td>Caixa</Td>
-                  <Td>R$ 2500,00</Td>
-                  <Td>12/12/2020</Td>
-                </Tr>
-                <Tr>
-                  <Td>1</Td>
-                  <Td>1</Td>
-                  <Td>Produto 1</Td>
-                  <Td>Bebidas</Td>
-                  <Td>Entrada</Td>
-                  <Td>20/01/2021</Td>
-                  <Td>10</Td>
-                  <Td>Caixa</Td>
-                  <Td>R$ 2500,00</Td>
-                  <Td>12/12/2020</Td>
-                </Tr>
-                <Tr>
-                  <Td>1</Td>
-                  <Td>Produto 1</Td>
-                  <Td>Bebidas</Td>
-                  <Td>Entrada</Td>
-                  <Td>20/01/2021</Td>
-                  <Td>10</Td>
-                  <Td>Caixa</Td>
-                  <Td>R$ 2500,00</Td>
-                  <Td>12/12/2020</Td>
-                </Tr>
-                <Tr>
-                  <Td>1</Td>
-                  <Td>Produto 1</Td>
-                  <Td>Bebidas</Td>
-                  <Td>Entrada</Td>
-                  <Td>20/01/2021</Td>
-                  <Td>10</Td>
-                  <Td>Caixa</Td>
-                  <Td>R$ 2500,00</Td>
-                  <Td>12/12/2020</Td>
-                </Tr>
-                <Tr>
-                  <Td>1</Td>
-                  <Td>Produto 1</Td>
-                  <Td>Bebidas</Td>
-                  <Td>Entrada</Td>
-                  <Td>20/01/2021</Td>
-                  <Td>10</Td>
-                  <Td>Caixa</Td>
-                  <Td>R$ 2500,00</Td>
-                  <Td>12/12/2020</Td>
-                </Tr>
-                <Tr>
-                  <Td>1</Td>
-                  <Td>Produto 1</Td>
-                  <Td>Bebidas</Td>
-                  <Td>Entrada</Td>
-                  <Td>20/01/2021</Td>
-                  <Td>10</Td>
-                  <Td>Caixa</Td>
-                  <Td>R$ 2500,00</Td>
-                  <Td>12/12/2020</Td>
-                </Tr>
-                <Tr>
-                  <Td>1</Td>
-                  <Td>Produto 1</Td>
-                  <Td>Bebidas</Td>
-                  <Td>Entrada</Td>
-                  <Td>20/01/2021</Td>
-                  <Td>10</Td>
-                  <Td>Caixa</Td>
-                  <Td>R$ 2500,00</Td>
-                  <Td>12/12/2020</Td>
-                </Tr>
-                <Tr>
-                  <Td>1</Td>
-                  <Td>Produto 1</Td>
-                  <Td>Bebidas</Td>
-                  <Td>Entrada</Td>
-                  <Td>20/01/2021</Td>
-                  <Td>10</Td>
-                  <Td>Caixa</Td>
-                  <Td>R$ 2500,00</Td>
-                  <Td>12/12/2020</Td>
-                </Tr>
-                <Tr>
-                  <Td>1</Td>
-                  <Td>Produto 1</Td>
-                  <Td>Bebidas</Td>
-                  <Td>Entrada</Td>
-                  <Td>20/01/2021</Td>
-                  <Td>10</Td>
-                  <Td>Caixa</Td>
-                  <Td>R$ 2500,00</Td>
-                  <Td>12/12/2020</Td>
-                </Tr>
-                <Tr>
-                  <Td>1</Td>
-                  <Td>Produto 1</Td>
-                  <Td>Bebidas</Td>
-                  <Td>Entrada</Td>
-                  <Td>20/01/2021</Td>
-                  <Td>10</Td>
-                  <Td>Caixa</Td>
-                  <Td>R$ 2500,00</Td>
-                  <Td>12/12/2020</Td>
-                </Tr>
-                <Tr>
-                  <Td>1</Td>
-                  <Td>Produto 1</Td>
-                  <Td>Bebidas</Td>
-                  <Td>Entrada</Td>
-                  <Td>20/01/2021</Td>
-                  <Td>10</Td>
-                  <Td>Caixa</Td>
-                  <Td>R$ 2500,00</Td>
-                  <Td>12/12/2020</Td>
-                </Tr>
-                <Tr>
-                  <Td>1</Td>
-                  <Td>Produto 1</Td>
-                  <Td>Bebidas</Td>
-                  <Td>Entrada</Td>
-                  <Td>20/01/2021</Td>
-                  <Td>10</Td>
-                  <Td>Caixa</Td>
-                  <Td>R$ 2500,00</Td>
-                  <Td>12/12/2020</Td>
-                </Tr>
-                <Tr>
-                  <Td>1</Td>
-                  <Td>Produto 1</Td>
-                  <Td>Bebidas</Td>
-                  <Td>Entrada</Td>
-                  <Td>20/01/2021</Td>
-                  <Td>10</Td>
-                  <Td>Caixa</Td>
-                  <Td>R$ 2500,00</Td>
-                  <Td>12/12/2020</Td>
-                </Tr>
-                <Tr>
-                  <Td>1</Td>
-                  <Td>Produto 1</Td>
-                  <Td>Bebidas</Td>
-                  <Td>Entrada</Td>
-                  <Td>20/01/2021</Td>
-                  <Td>10</Td>
-                  <Td>Caixa</Td>
-                  <Td>R$ 2500,00</Td>
-                  <Td>12/12/2020</Td>
-                </Tr>
-                <Tr>
-                  <Td>1</Td>
-                  <Td>Produto 1</Td>
-                  <Td>Bebidas</Td>
-                  <Td>Entrada</Td>
-                  <Td>20/01/2021</Td>
-                  <Td>10</Td>
-                  <Td>Caixa</Td>
-                  <Td>R$ 2500,00</Td>
-                  <Td>12/12/2020</Td>
-                </Tr>
-                <Tr>
-                  <Td>1</Td>
-                  <Td>Produto 1</Td>
-                  <Td>Bebidas</Td>
-                  <Td>Entrada</Td>
-                  <Td>20/01/2021</Td>
-                  <Td>10</Td>
-                  <Td>Caixa</Td>
-                  <Td>R$ 2500,00</Td>
-                  <Td>12/12/2020</Td>
-                </Tr>
-              </Tbody>
-            </Table>
-          </Box>
+          <Button mr="8" onClick={onOpen}>
+            Criar Item
+          </Button>
         </Flex>
-      </Flex>
+        <Flex align="center" justifyContent="center" h="500px">
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <Box
+              maxH="500px"
+              overflowY="scroll"
+              css={{
+                '&::-webkit-scrollbar': {
+                  width: '4px',
+                },
+                '&::-webkit-scrollbar-track': {
+                  width: '6px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  background: '#023047',
+                  borderRadius: '24px',
+                },
+              }}
+            >
+              <Table>
+                <Thead>
+                  <Tr>
+                    <Th textAlign="center">Nome</Th>
+                    <Th textAlign="center">Categoria</Th>
+                    <Th textAlign="center">Estoque Min.</Th>
+                    <Th textAlign="center">Dias para aviso de vencimento</Th>
+                    <Th textAlign="center">Und</Th>
+                    <Th textAlign="center">Criado em</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {listItems &&
+                    listItems?.map(item => (
+                      <Tr key={item.id}>
+                        <Td textAlign="center">{item.name}</Td>
+                        <Td textAlign="center">{item.category}</Td>
+                        <Td textAlign="center">{item.minimumStock}</Td>
+                        <Td textAlign="center">
+                          {item.daysToNotifyExpirationDate}
+                        </Td>
+                        <Td textAlign="center">{item.measureunity}</Td>
+                        <Td textAlign="center">{item.createdat}</Td>
+                      </Tr>
+                    ))}
+                </Tbody>
+              </Table>
+            </Box>
+          )}
+        </Flex>
+      </Grid>
       <ModalRegisterItem isOpen={isOpen} onClose={onClose} />
     </Flex>
   );

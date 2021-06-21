@@ -23,7 +23,6 @@ interface ModalRegisterItemProps {
 }
 
 interface CreateItemFormData {
-  code?: string;
   name: string;
   category: string;
   minimumStock?: number;
@@ -72,6 +71,12 @@ export function ModalRegisterItem({
 
   const onSubmit = async (item: CreateItemFormData): Promise<void> => {
     try {
+      const removeEmptyItem = item;
+      Object.keys(removeEmptyItem).forEach(key => {
+        if (removeEmptyItem[key] === '' || removeEmptyItem[key] == null) {
+          delete removeEmptyItem[key];
+        }
+      });
       await createItem.mutateAsync(item);
 
       reset();
@@ -116,12 +121,6 @@ export function ModalRegisterItem({
           >
             <VStack>
               <Input
-                name="code"
-                label="Código"
-                error={errors.code}
-                {...register('code')}
-              />
-              <Input
                 name="name"
                 label="Nome do produto"
                 error={errors.name}
@@ -142,6 +141,8 @@ export function ModalRegisterItem({
               <Input
                 name="daysToNotifyExpirationDate"
                 label="Dias mínimos para vencer (opcional)"
+                type="number"
+                defaultValue={0}
                 error={errors.daysToNotifyExpirationDate}
                 {...register('daysToNotifyExpirationDate')}
               />
@@ -149,6 +150,8 @@ export function ModalRegisterItem({
                 name="minimumStock"
                 label="Estoque mínimo (opcional)"
                 error={errors.minimumStock}
+                defaultValue={0}
+                type="number"
                 {...register('minimumStock')}
               />
             </VStack>

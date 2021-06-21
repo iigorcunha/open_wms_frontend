@@ -12,15 +12,7 @@ export function SidebarProfile(): JSX.Element {
       mb="20"
       w="100%"
     >
-      <Avatar
-        mr="10"
-        h={16}
-        w={16}
-        mb="4"
-        borderRadius="50%"
-        bgColor="#F5F5F5"
-      />
-      <Text mr="10" fontWeight="bold">
+      <Text mr="10" fontSize="2xl" fontWeight="bold">
         {user?.login}
       </Text>
 

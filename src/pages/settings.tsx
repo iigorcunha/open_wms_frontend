@@ -6,6 +6,7 @@ import {
   Stack,
   useToast,
   SimpleGrid,
+  useDisclosure,
   Button as ChakraButton,
 } from '@chakra-ui/react';
 import { RiPencilLine, RiSaveLine } from 'react-icons/ri';
@@ -21,6 +22,7 @@ import { Sidebar } from '../components/Sidebar';
 import { Button } from '../components/Button';
 import { withSSRAuth } from '../utils/withSSRAuth';
 import { useAuth } from '../hooks/useAuth';
+import { ModalDeleteUser } from '../components/ModalDeleteUser';
 
 interface RegisterFormData {
   name: string;
@@ -55,6 +57,7 @@ const passwordSchema = yup.object().shape({
 
 export default function Settings(): JSX.Element {
   const toast = useToast();
+  const { isOpen, onClose, onOpen } = useDisclosure();
   const { user, updateUserInformation } = useAuth();
 
   const [notifyEmail, setNotifyEmail] = useState(true);
@@ -375,7 +378,11 @@ export default function Settings(): JSX.Element {
             </Stack>
           </Box>
         </Flex>
+        <ChakraButton onClick={onOpen} size="lg" colorScheme="red">
+          Deletar Conta
+        </ChakraButton>
       </Flex>
+      <ModalDeleteUser isOpen={isOpen} onClose={onClose} />
     </Flex>
   );
 }

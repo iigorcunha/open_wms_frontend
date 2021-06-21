@@ -28,7 +28,7 @@ export function SidebarLink({
         pl="4"
         pt="2.5"
         pb="2"
-        pr="22"
+        pr="16"
         borderLeftRadius="25"
         textDecorationLine="none"
         maxW={240}

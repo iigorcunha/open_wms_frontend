@@ -89,11 +89,12 @@ export default function SignUp(): JSX.Element {
 
       router.push('/login');
     } catch (err) {
+      console.log(err.response);
       toast({
         duration: 3000,
         status: 'error',
         title: 'Alguma coisa deu errado!',
-        description: err.response.data.error,
+        description: err.response?.data.error,
         position: 'top-right',
       });
     }
