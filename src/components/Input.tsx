@@ -10,6 +10,7 @@ import {
   InputProps as ChakraInputProps,
   Tooltip,
   InputRightElement,
+  InputLeftElement,
 } from '@chakra-ui/react';
 import { FiAlertCircle } from 'react-icons/fi';
 
@@ -18,10 +19,11 @@ interface InputProps extends ChakraInputProps {
   label?: string;
   error?: FieldError;
   isDark?: boolean;
+  leftInputElement?: string;
 }
 
 const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
-  { name, isDark = false, label, error = null, ...rest },
+  { name, isDark = false, label, error = null, leftInputElement, ...rest },
   ref
 ) => {
   return (
@@ -32,14 +34,13 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
       justifyContent="center"
       isInvalid={!!error}
       maxW="450px"
-      mb="6"
     >
       <Text
         ml="4"
         fontWeight="600"
         fontSize="m"
         letterSpacing="1px"
-        color="main.white"
+        color={isDark ? 'main.white' : 'main.darkBlue'}
       >
         {label}
       </Text>
@@ -49,22 +50,29 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
         alignItems="center"
         justifyContent="center"
       >
+        {leftInputElement && (
+          <InputLeftElement p={6} fontSize="xl" h="100%" color="main.darkBlue">
+            <span role="img" aria-label="Brazil">
+              {leftInputElement}
+            </span>
+          </InputLeftElement>
+        )}
+
         <ChakraInput
-          h="60px"
+          size="lg"
           aria-label={name}
           name={name}
           fontSize="xl"
           ref={ref}
+          color="main.darkBlue"
+          borderWidth="3px"
           borderColor="transparent"
-          bgColor={isDark ? 'main.darkBlue' : 'main.offWhite'}
-          _placeholder={{
-            color: isDark ? 'main.white' : 'main.darkBlue',
-          }}
+          bgColor="main.offWhite"
           _hover={{
-            borderColor: isDark ? 'main.offWhite' : 'main.green',
+            borderColor: isDark ? 'main.green' : 'main.darkBlue',
           }}
           borderRadius="20px"
-          py={6}
+          py={8}
           pr={8}
           {...rest}
         />

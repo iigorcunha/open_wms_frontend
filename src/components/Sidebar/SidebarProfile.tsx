@@ -1,16 +1,33 @@
-import { Box, Avatar, Text } from '@chakra-ui/react';
+import { Flex, Avatar, Text, IconButton, Icon } from '@chakra-ui/react';
+import { RiShutDownLine } from 'react-icons/ri';
+import { useAuth } from '../../hooks/useAuth';
 
-interface SidebarProfileProps {
-  name: string;
-}
-
-export function SidebarProfile({ name }: SidebarProfileProps): JSX.Element {
+export function SidebarProfile(): JSX.Element {
+  const { signOut, user } = useAuth();
   return (
-    <Box justifyContent="center" mb="20">
-      <Avatar h={120} w={120} mb="4" borderRadius="50%" bgColor="#F5F5F5" />
-      <Text ml="2" fontWeight="bold">
-        {name}
+    <Flex
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      mb="20"
+      w="100%"
+    >
+      <Text mr="10" fontSize="2xl" fontWeight="bold">
+        {user?.login}
       </Text>
-    </Box>
+
+      <IconButton
+        aria-label="shutdown"
+        mr="10"
+        borderRadius="full"
+        color="red.500"
+        colorScheme="transparent"
+        size="sm"
+        mt="8"
+        onClick={signOut}
+      >
+        <Icon as={RiShutDownLine} fontSize="2xl" />
+      </IconButton>
+    </Flex>
   );
 }

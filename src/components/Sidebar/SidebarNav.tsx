@@ -1,9 +1,9 @@
 import { Stack } from '@chakra-ui/react';
 import {
-  RiDashboardLine,
-  RiTBoxLine,
-  RiFileEditLine,
-  RiSettingsLine,
+  RiDashboardFill,
+  RiArchiveFill,
+  RiDraftFill,
+  RiSettings5Fill,
 } from 'react-icons/ri';
 import { SidebarLink } from './SidebarLink';
 import { SidebarProfile } from './SidebarProfile';
@@ -11,12 +11,20 @@ import { SidebarProfile } from './SidebarProfile';
 export function SidebarNav(): JSX.Element {
   return (
     <Stack ml="6" mt="10" spacing="8" align="flex-start">
-      <SidebarProfile name="Fulano de Tal" />
+      <SidebarProfile />
 
-      <SidebarLink icon={RiDashboardLine}>Dashboard</SidebarLink>
-      <SidebarLink icon={RiTBoxLine}>Estoque</SidebarLink>
-      <SidebarLink icon={RiFileEditLine}>Cadastro</SidebarLink>
-      <SidebarLink icon={RiSettingsLine}>Configurções</SidebarLink>
+      <SidebarLink href="/dashboard" icon={RiDashboardFill}>
+        Dashboard
+      </SidebarLink>
+      <SidebarLink href="/stock" icon={RiArchiveFill}>
+        Estoque
+      </SidebarLink>
+      <SidebarLink href="/products" icon={RiDraftFill}>
+        Cadastro
+      </SidebarLink>
+      <SidebarLink href="/settings" icon={RiSettings5Fill}>
+        Configurações
+      </SidebarLink>
     </Stack>
   );
 }
