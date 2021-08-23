@@ -1,20 +1,20 @@
 ![OpenWMS](/public/images/logoHorizontal.svg)
   
-## Apresentação
-Toda empresa, desde as pequenas até as grandes, precisam de um controle de seu estoque. Muitos empreendedores recorrem a métodos mais cansativos e que demandam bastante tempo, como por exemplo, através de planilhas, pois sistemas especializados possuem um alto custo de aquisição. O nosso objetivo, através desse projeto, foi criar um WMS(Warehouse management system) gratuito e acessível para todos, onde qualquer negócio consiga criar sua conta e realizar um controle muito mais preciso de seus inventários, com alertas de vencimento e de estoque mínimo. 
+## Summary
+All companies, from minor to big ones, needed to control their warehouse. Many entrepreneurs in Brazil commonly use inefficient methods that spend a lot of time, for example, spreadsheets, because large WMS systems are too expensive. Through this project, our goal was to create a WMS free and accessible for everyone, where any business can create an account and control their warehouse without risks and with shelf life and minimum quantity alerts.
 
 <!--ts-->
-   * [Apresentação](#Apresentação)
-   * [Tecnologias](#Tecnologias)
-   * [Instalação](#Instalação)
+   * [Summary](#Summary)
+   * [Technologies](#Technologies)
+   * [Installation](#Installation)
 <!--te-->
 
 ## Design
 ![OpenWMS](/public/images/homeScreen.png)
-O design foi construído com o foco em simplicidade, tornando a aplicação muito intuitiva e amigável para qualquer usuário. 
+The design was build focused on simplicity, turning the application very intuitive and friendly for any user.
 
-## Tecnologias
-O projeto foi desenvolvido utilizando as tecnologias mais atuais, como: 
+## Technologies
+The project was build with these technologies:
 + [TS(typescript)](https://www.typescriptlang.org)
 + [NextJs](https://nextjs.org)
 + [Chakra-ui](https://chakra-ui.com)
@@ -22,23 +22,18 @@ O projeto foi desenvolvido utilizando as tecnologias mais atuais, como:
 + [react-hook-form](https://react-hook-form.com)
 + [yup](https://github.com/jquense/yup) 
 
-## Instalação
-Para executar nosso projeto, você vai precisar do **npm/yarn** e do **git**.
+## Installation
+To run our project, you will need **npm/yarn** and **git**.
 
-Antes de tudo, você precisará clonar o nosso repositório, então pode utilizar o seguinte comando:
+You will need to clone our backend repository, follow the command below:
 ```
 git clone https://github.com/regisfaria/open_wms_backend
 ```
+After you cloned the repository, follow the commands in backend repository:
 
-Depois do repositório clonado, você deve executar o seguinte comando:
-
-```shell
-yarn OU npm install
-```
-
-Em seguida, execute o comando:
+After the backend is ready to use, run the command below:
 
 ```shell
 yarn start OU npm start
 ```
-Agora o seu projeto vai estar disponível em: **http://localhost:3000**. 
+The project will be running locally on this URI: **http://localhost:3000**. 
