@@ -1,44 +1,11 @@
-import {
-  Flex,
-  Heading,
-  Box,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  SimpleGrid,
-  Text,
-} from '@chakra-ui/react';
+import { Flex, Heading, Box, SimpleGrid, Text } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
-import { useQuery } from 'react-query';
 import { theme } from '../styles/theme';
 
 import { Sidebar } from '../components/Sidebar';
-import { api } from '../services/apiClient';
 import { withSSRAuth } from '../utils/withSSRAuth';
 import { setupApiClient } from '../services/api';
-
-interface ItemSummaryData {
-  item: {
-    id: string;
-    userId: string;
-    name: string;
-    category: string;
-    minimumStock: number;
-    daysToNotifyExpirationDate: number;
-    image: number;
-    imageUrl: number;
-    measureUnity: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-  totalQtd: number;
-  balance: number;
-}
 
 interface Dashboard {
   itemId: string;
@@ -87,25 +54,6 @@ const options = {
 export default function Dashboard({
   dashboard = [],
 }: DashboardProps): JSX.Element {
-  const [itemsSummary, setItemsSummary] = useState<ItemSummaryData[]>([]);
-  const [chartData, setChartData] = useState([]);
-  // const { isLoading, isError, error } = useQuery('getStock', () =>
-  //   api.get('/stocks/dashboard').then(response => {
-  //     setItemsSummary(response.data);
-  //     setChartData(
-  //       response.data.map(is => {
-  //         return {
-  //           itemId: is.item.id,
-  //           itemName: is.item.name,
-  //           balance: is.balance,
-  //           totalQtd: is.totalQtd,
-  //           measureunity: is.item.measureunity,
-  //         };
-  //       })
-  //     );
-  //   })
-  // );
-
   return (
     <Flex w="100vw">
       <Sidebar />
