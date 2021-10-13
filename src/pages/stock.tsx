@@ -87,6 +87,7 @@ export default function Stock({ listItems }: StockProps): JSX.Element {
   return (
     <Flex w="100%">
       <Sidebar />
+      {console.log(data)}
       <Grid
         templateAreas="'title' 'middleBlock' '1fr 1fr 1fr'"
         bg="main.white"
@@ -205,7 +206,7 @@ export default function Stock({ listItems }: StockProps): JSX.Element {
 export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
   const apiClient = setupApiClient(ctx);
 
-  let items = '';
+  let items = {} as StockProps;
 
   try {
     const response = await apiClient.get('/items');
@@ -215,7 +216,7 @@ export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
   }
   return {
     props: {
-      listItems: items,
+      listItems: items.listItems,
     },
   };
 });

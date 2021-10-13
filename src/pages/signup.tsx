@@ -4,6 +4,7 @@ import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { Loading } from '../components/Loading';
 import { Input } from '../components/Input';
 import { Button } from '../components/Button';
 import { api } from '../services/apiClient';
@@ -89,7 +90,6 @@ export default function SignUp(): JSX.Element {
 
       router.push('/login');
     } catch (err) {
-      console.log(err.response);
       toast({
         duration: 3000,
         status: 'error',
@@ -99,6 +99,11 @@ export default function SignUp(): JSX.Element {
       });
     }
   };
+
+  if (createUser.isLoading) {
+    return <Loading />;
+  }
+
   return (
     <Grid templateAreas="'1fr 1fr'" h="100vh">
       <Flex
@@ -113,7 +118,7 @@ export default function SignUp(): JSX.Element {
         onSubmit={handleSubmit(onSubmit, onError)}
       >
         <Image src="/images/logoVertical.svg" mb="16" />
-        <VStack w="100%">
+        <VStack w="100%" p={6}>
           <Input
             isDark
             name="name"
@@ -166,9 +171,11 @@ export default function SignUp(): JSX.Element {
             {...register('passwordConfirmation')}
           />
         </VStack>
-        <Button type="submit" mt="8">
-          CADASTRAR
-        </Button>
+        <VStack p={6} w="100%">
+          <Button type="submit" mt="8">
+            CADASTRAR
+          </Button>
+        </VStack>
       </Flex>
       <Box
         bgImage="url('/images/signUpPhoto.jpg')"

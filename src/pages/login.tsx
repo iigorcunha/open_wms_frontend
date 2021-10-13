@@ -75,7 +75,7 @@ export default function Login(): JSX.Element {
         onSubmit={handleSubmit(onSubmit, onError)}
       >
         <Image src="/images/logoVertical.svg" mb="16" />
-        <VStack w="100%" spacing="8">
+        <VStack w="100%" spacing="8" p={6}>
           <Input
             name="login"
             placeholder="Nome de usuário"
@@ -94,14 +94,16 @@ export default function Login(): JSX.Element {
             {...register('password')}
           />
         </VStack>
-        <Button
-          type="submit"
-          mt="16"
-          isSubmitting={isSubmitting}
-          isDisabled={isSubmitting}
-        >
-          ENTRAR
-        </Button>
+        <VStack p={6} w="100%">
+          <Button
+            type="submit"
+            mt="16"
+            isSubmitting={isSubmitting}
+            isDisabled={isSubmitting}
+          >
+            ENTRAR
+          </Button>
+        </VStack>
       </Flex>
     </Grid>
   );

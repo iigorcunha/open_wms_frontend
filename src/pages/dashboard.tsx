@@ -115,7 +115,7 @@ export default function Dashboard({
 export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
   const apiClient = setupApiClient(ctx);
 
-  let dashboard = [];
+  let dashboard = [] as Dashboard[];
 
   try {
     const response = await apiClient.get('/stocks/dashboard');
