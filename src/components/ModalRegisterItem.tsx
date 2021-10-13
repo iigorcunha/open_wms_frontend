@@ -20,6 +20,7 @@ import { Input } from './Input';
 interface ModalRegisterItemProps {
   isOpen: boolean;
   onClose: () => void;
+  refetch: () => void;
 }
 
 interface CreateItemFormData {
@@ -34,6 +35,7 @@ interface CreateItemFormData {
 export function ModalRegisterItem({
   isOpen,
   onClose,
+  refetch,
 }: ModalRegisterItemProps): JSX.Element {
   const {
     handleSubmit,
@@ -65,6 +67,7 @@ export function ModalRegisterItem({
     {
       onSuccess: () => {
         queryClient.invalidateQueries('items');
+        refetch();
       },
     }
   );

@@ -2,8 +2,10 @@ import { Flex, Heading, Box, SimpleGrid, Text } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import { useQuery } from 'react-query';
+import { useState } from 'react';
 import { theme } from '../styles/theme';
 
+import { Loading } from '../components/Loading';
 import { Sidebar } from '../components/Sidebar';
 import { withSSRAuth } from '../utils/withSSRAuth';
 import { api } from '../services/apiClient';
@@ -26,6 +28,10 @@ interface Dashboard {
   item: Item;
   balance: number;
   totalQtd: number;
+}
+
+interface DashboardResponse {
+  dashboardData: Dashboard[];
 }
 
 const Chart = dynamic(() => import('react-apexcharts'), {
@@ -62,18 +68,22 @@ const options = {
 };
 
 export default function Dashboard(): JSX.Element {
-  const { isLoading, isError, error, data } = useQuery<Dashboard[]>(
-    'getStock',
-    () =>
-      api.get('/stocks/dashboard').then(response => {
-        const dashboard = response.data;
-        return dashboard;
-      })
+  const { isLoading, data } = useQuery<DashboardResponse>('getStock', () =>
+    api.get('/stocks/dashboard').then(response => {
+      const dashboard = response.data;
+
+      return dashboard;
+    })
   );
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Flex w="100vw">
       <Sidebar />
+      {console.log(data)}
       <Flex
         bg="main.white"
         borderRadius="20"
@@ -98,10 +108,21 @@ export default function Dashboard(): JSX.Element {
                     },
                   },
                   xaxis: {
-                    categories: data.map(cd => cd.item.name),
+                    categories:
+                      data.dashboardData.length > 0
+                        ? data.dashboardData.map(cd => cd.item.name)
+                        : [''],
                   },
                 }}
-                series={[{ name: 'Saldo', data: data.map(cd => cd.balance) }]}
+                series={[
+                  {
+                    name: 'Saldo',
+                    data:
+                      data.dashboardData.length > 0
+                        ? data.dashboardData.map(cd => cd.balance)
+                        : [0],
+                  },
+                ]}
                 type="bar"
                 height={160}
               />
@@ -111,9 +132,22 @@ export default function Dashboard(): JSX.Element {
               <Chart
                 options={{
                   ...options,
-                  xaxis: { categories: data.map(cd => cd.item.name) },
+                  xaxis: {
+                    categories:
+                      data.dashboardData.length > 0
+                        ? data.dashboardData.map(cd => cd.item.name)
+                        : [''],
+                  },
                 }}
-                series={[{ name: 'Total', data: data.map(cd => cd.totalQtd) }]}
+                series={[
+                  {
+                    name: 'Total',
+                    data:
+                      data.dashboardData.length > 0
+                        ? data.dashboardData.map(cd => cd.totalQtd)
+                        : [0],
+                  },
+                ]}
                 type="bar"
                 height={160}
               />

@@ -3,6 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import * as yup from 'yup';
+import { Loading } from '../components/Loading';
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
 import { useAuth } from '../hooks/useAuth';
@@ -57,6 +58,10 @@ export default function Login(): JSX.Element {
       });
     }
   };
+
+  if (authenticate.isLoading) {
+    return <Loading />;
+  }
   return (
     <Grid templateAreas="'1fr 1fr'" h="100vh">
       <Box

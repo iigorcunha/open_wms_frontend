@@ -25,40 +25,12 @@ import { Button } from '../components/Button';
 import { Sidebar } from '../components/Sidebar';
 import { withSSRAuth } from '../utils/withSSRAuth';
 import { api } from '../services/apiClient';
-
-interface Item {
-  userId: string;
-  name: string;
-  category: string;
-  minimumStock: number;
-  daysToNotifyExpirationDate: number;
-  measureunity: string;
-  id: string;
-  createdat: Date;
-}
+import { useItems } from '../hooks/useItems';
 
 export default function Products(): JSX.Element {
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const [listItems, setListItems] = useState<Item[]>([]);
 
-  const { isLoading, isError, error, data } = useQuery('getStock', () =>
-    api.get('/items').then(response => {
-      const { items } = response.data;
-      const newItems = items.map(item => {
-        return {
-          userId: item.userId,
-          name: item.name,
-          category: item.category,
-          minimumStock: item.minimumStock,
-          daysToNotifyExpirationDate: item.daysToNotifyExpirationDate,
-          measureunity: item.measureunity,
-          id: item.id,
-          createdat: format(new Date(item.createdat), 'dd/MM/yyyy'),
-        };
-      });
-      setListItems(newItems);
-    })
-  );
+  const { items, refetchItem, isLoading } = useItems();
 
   return (
     <Flex w="100%">
@@ -129,8 +101,8 @@ export default function Products(): JSX.Element {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {listItems &&
-                    listItems?.map(item => (
+                  {items &&
+                    items?.map(item => (
                       <Tr key={item.id}>
                         <Td textAlign="center">{item.name}</Td>
                         <Td textAlign="center">{item.category}</Td>
@@ -139,7 +111,9 @@ export default function Products(): JSX.Element {
                           {item.daysToNotifyExpirationDate}
                         </Td>
                         <Td textAlign="center">{item.measureunity}</Td>
-                        <Td textAlign="center">{item.createdat}</Td>
+                        <Td textAlign="center">
+                          {format(new Date(item.createdat), 'dd/MM/yyyy')}
+                        </Td>
                       </Tr>
                     ))}
                 </Tbody>
@@ -148,7 +122,11 @@ export default function Products(): JSX.Element {
           )}
         </Flex>
       </Grid>
-      <ModalRegisterItem isOpen={isOpen} onClose={onClose} />
+      <ModalRegisterItem
+        isOpen={isOpen}
+        onClose={onClose}
+        refetch={refetchItem}
+      />
     </Flex>
   );
 }

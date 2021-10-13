@@ -25,6 +25,7 @@ import { Input } from './Input';
 interface ModalRegisterStockProps {
   isOpen: boolean;
   onClose: () => void;
+  refetch: () => void;
 }
 
 interface CreateStockFormData {
@@ -52,6 +53,7 @@ interface ItemsData {
 export function ModalRegisterStock({
   isOpen,
   onClose,
+  refetch,
 }: ModalRegisterStockProps): JSX.Element {
   const [items, setItems] = useState<ItemsData>({ items: [] });
   const {
@@ -84,6 +86,7 @@ export function ModalRegisterStock({
     {
       onSuccess: () => {
         queryClient.invalidateQueries('stock');
+        refetch();
       },
     }
   );

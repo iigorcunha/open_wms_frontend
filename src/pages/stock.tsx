@@ -27,7 +27,7 @@ import { Sidebar } from '../components/Sidebar';
 import { Button } from '../components/Button';
 import { withSSRAuth } from '../utils/withSSRAuth';
 import { api } from '../services/apiClient';
-import { setupApiClient } from '../services/api';
+import { useItems } from '../hooks/useItems';
 
 interface Stock {
   id: string;
@@ -40,8 +40,14 @@ interface Stock {
 }
 
 interface Item {
-  id: string;
+  userId: string;
   name: string;
+  category: string;
+  minimumStock: number;
+  daysToNotifyExpirationDate: number;
+  measureunity: string;
+  id: string;
+  createdat: Date;
 }
 
 interface StockData {
@@ -53,14 +59,12 @@ interface FilterFormData {
   filterByItem: string;
 }
 
-interface StockProps {
-  listItems: Item[];
-}
-
-export default function Stock({ listItems }: StockProps): JSX.Element {
+export default function Stock(): JSX.Element {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { handleSubmit, register } = useForm();
   const [filterItems, setFilterItems] = useState('');
+
+  const { items } = useItems();
 
   const { isLoading, refetch, data } = useQuery(
     ['getStock', filterItems],
@@ -84,10 +88,10 @@ export default function Stock({ listItems }: StockProps): JSX.Element {
     setFilterItems(filterByItem);
     refetch();
   };
+
   return (
     <Flex w="100%">
       <Sidebar />
-      {console.log(data)}
       <Grid
         templateAreas="'title' 'middleBlock' '1fr 1fr 1fr'"
         bg="main.white"
@@ -110,7 +114,7 @@ export default function Stock({ listItems }: StockProps): JSX.Element {
         >
           <HStack
             spacing="6"
-            w="30%"
+            w="40%"
             as="form"
             onSubmit={handleSubmit(onSubmit)}
           >
@@ -122,18 +126,21 @@ export default function Stock({ listItems }: StockProps): JSX.Element {
             >
               Movimentação de estoque
             </Text>
-            <Select
-              {...register('filterByItem')}
-              placeholder="Select option"
-              onSelect={event => setFilterItems(event.currentTarget.value)}
-            >
-              {listItems &&
-                listItems.map(item => (
+
+            {items?.length > 0 && (
+              <Select
+                minW="200px"
+                {...register('filterByItem')}
+                placeholder="Select option"
+                onSelect={event => setFilterItems(event.currentTarget.value)}
+              >
+                {items.map(item => (
                   <option key={item.id} value={item.id}>
                     {item.name}
                   </option>
                 ))}
-            </Select>
+              </Select>
+            )}
             <Button type="submit">Filtrar</Button>
           </HStack>
           <Button mr="8" onClick={onOpen}>
@@ -198,25 +205,13 @@ export default function Stock({ listItems }: StockProps): JSX.Element {
           )}
         </Flex>
       </Grid>
-      <ModalRegisterStock isOpen={isOpen} onClose={onClose} />
+      <ModalRegisterStock isOpen={isOpen} onClose={onClose} refetch={refetch} />
     </Flex>
   );
 }
 
 export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
-  const apiClient = setupApiClient(ctx);
-
-  let items = {} as StockProps;
-
-  try {
-    const response = await apiClient.get('/items');
-    items = response.data;
-  } catch (err) {
-    console.error(err);
-  }
   return {
-    props: {
-      listItems: items.listItems,
-    },
+    props: {},
   };
 });

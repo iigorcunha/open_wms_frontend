@@ -1,4 +1,5 @@
 import { AuthProvider } from '../contexts/AuthContext';
+import { ItemProvider } from '../contexts/ItemContext';
 import { SidebarDrawerProvider } from '../contexts/SidebarDrawerContext';
 
 interface AppProviderProps {
@@ -8,7 +9,9 @@ interface AppProviderProps {
 export function AppProvider({ children }: AppProviderProps): JSX.Element {
   return (
     <AuthProvider>
-      <SidebarDrawerProvider>{children}</SidebarDrawerProvider>
+      <ItemProvider>
+        <SidebarDrawerProvider>{children}</SidebarDrawerProvider>
+      </ItemProvider>
     </AuthProvider>
   );
 }
