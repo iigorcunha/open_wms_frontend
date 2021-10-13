@@ -115,15 +115,21 @@ export default function Dashboard({
 export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
   const apiClient = setupApiClient(ctx);
 
-  const response = await apiClient.get('/stocks/dashboard');
-  const dashboard = response.data.dashboardData.map(dash => {
-    return {
-      itemId: dash.item.id,
-      itemName: dash.item.name,
-      balance: dash.balance,
-      totalQtd: dash.totalQtd,
-    };
-  });
+  let dashboard = [];
+
+  try {
+    const response = await apiClient.get('/stocks/dashboard');
+    dashboard = response.data.dashboardData.map(dash => {
+      return {
+        itemId: dash.item.id,
+        itemName: dash.item.name,
+        balance: dash.balance,
+        totalQtd: dash.totalQtd,
+      };
+    });
+  } catch (err) {
+    console.error(err);
+  }
 
   return {
     props: {

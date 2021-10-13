@@ -205,10 +205,17 @@ export default function Stock({ listItems }: StockProps): JSX.Element {
 export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
   const apiClient = setupApiClient(ctx);
 
-  const response = await apiClient.get('/items');
+  let items = '';
+
+  try {
+    const response = await apiClient.get('/items');
+    items = response.data;
+  } catch (err) {
+    console.error(err);
+  }
   return {
     props: {
-      listItems: response.data.items,
+      listItems: items,
     },
   };
 });
