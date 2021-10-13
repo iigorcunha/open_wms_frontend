@@ -1,21 +1,31 @@
 import { Flex, Heading, Box, SimpleGrid, Text } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
+import { useQuery } from 'react-query';
 import { theme } from '../styles/theme';
 
 import { Sidebar } from '../components/Sidebar';
 import { withSSRAuth } from '../utils/withSSRAuth';
-import { setupApiClient } from '../services/api';
+import { api } from '../services/apiClient';
 
-interface Dashboard {
-  itemId: string;
-  itemName: string;
-  balance: number;
-  totalQtd: number;
+interface Item {
+  id: string;
+  userId: string;
+  name: string;
+  category: string;
+  minimumStock: number;
+  daysToNotifyExpirationDate: number;
+  image: number;
+  imageUrl: number;
+  measureUnity: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
-interface DashboardProps {
-  dashboard: Dashboard[];
+interface Dashboard {
+  item: Item;
+  balance: number;
+  totalQtd: number;
 }
 
 const Chart = dynamic(() => import('react-apexcharts'), {
@@ -51,9 +61,16 @@ const options = {
   },
 };
 
-export default function Dashboard({
-  dashboard = [],
-}: DashboardProps): JSX.Element {
+export default function Dashboard(): JSX.Element {
+  const { isLoading, isError, error, data } = useQuery<Dashboard[]>(
+    'getStock',
+    () =>
+      api.get('/stocks/dashboard').then(response => {
+        const dashboard = response.data;
+        return dashboard;
+      })
+  );
+
   return (
     <Flex w="100vw">
       <Sidebar />
@@ -81,12 +98,10 @@ export default function Dashboard({
                     },
                   },
                   xaxis: {
-                    categories: dashboard.map(cd => cd.itemName),
+                    categories: data.map(cd => cd.item.name),
                   },
                 }}
-                series={[
-                  { name: 'Saldo', data: dashboard.map(cd => cd.balance) },
-                ]}
+                series={[{ name: 'Saldo', data: data.map(cd => cd.balance) }]}
                 type="bar"
                 height={160}
               />
@@ -96,11 +111,9 @@ export default function Dashboard({
               <Chart
                 options={{
                   ...options,
-                  xaxis: { categories: dashboard.map(cd => cd.itemName) },
+                  xaxis: { categories: data.map(cd => cd.item.name) },
                 }}
-                series={[
-                  { name: 'Total', data: dashboard.map(cd => cd.totalQtd) },
-                ]}
+                series={[{ name: 'Total', data: data.map(cd => cd.totalQtd) }]}
                 type="bar"
                 height={160}
               />
@@ -113,27 +126,7 @@ export default function Dashboard({
 }
 
 export const getServerSideProps: GetServerSideProps = withSSRAuth(async ctx => {
-  const apiClient = setupApiClient(ctx);
-
-  let dashboard = [] as Dashboard[];
-
-  try {
-    const response = await apiClient.get('/stocks/dashboard');
-    dashboard = response.data.dashboardData.map(dash => {
-      return {
-        itemId: dash.item.id,
-        itemName: dash.item.name,
-        balance: dash.balance,
-        totalQtd: dash.totalQtd,
-      };
-    });
-  } catch (err) {
-    console.error(err);
-  }
-
   return {
-    props: {
-      dashboard,
-    },
+    props: {},
   };
 });
